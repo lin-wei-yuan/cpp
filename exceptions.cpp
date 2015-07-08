@@ -1,6 +1,5 @@
 #include <iostream>
 #include <typeinfo>
-#include "stacktrace.h"
 #include "smart.h"
 #include "t.h"
 #include <stdexcept>
@@ -45,7 +44,6 @@ void letstry() {
 
 void challenge1() {
   try {
-    // print_stacktrace();
     letstry();
   } catch (...) {
     if (isFixed) {
@@ -58,7 +56,7 @@ void challenge1() {
 
 void lestMakeLeak2_1(int i) {
   T* p = new T();
-  if (i == 0) {
+  if(i == 0) {
     throw std::logic_error("Ruine challenge2");
   }
   delete p;
@@ -105,14 +103,30 @@ void challenge3() {
   // cp1.release(); // - compilation error
 }
 
-// @TODO: Exceptions in ctors
-// @TODO: Exceptions in dtors
+// Exceptions in ctors
+void challenge4() {
+  try {
+    A obj(T(1));
+  } catch (const std::exception& e) {
+    std::cout << e.what() << std::endl;
+  }
+}
+// Exceptions in dtors
+void challenge5() {
+  try {
+    // std::unexpected()
+    // B obj(T(1));
+  } catch (const std::exception& e) {
+    std::cout << e.what() << std::endl;
+  }
+}
 
 /* -------------------- */
 int main() {
-  // print_stacktrace();
   // challenge1();
   // challenge2();
-  challenge3();
+  // challenge3();
+  // challenge4();
+  challenge5();
   return 0;
 }
