@@ -120,13 +120,48 @@ void challenge5() {
     std::cout << e.what() << std::endl;
   }
 }
-
+// Exceptions and methods
+void f_throw(int ex_id) throw(std::logic_error, simpleException) {
+  T test(1);
+  if (ex_id == 1) {
+    throw std::logic_error("Test std::logic_error");
+  }
+  if (ex_id == 2) {
+    throw simpleException();
+  }
+  // std::unexpected
+  if(ex_id == 3) {
+    throw std::runtime_error("std::unexpected");
+  }
+}
+// Exceptions f() throw(...) {}
+void challenge6() {
+  try {
+    // f_throw(1); // logic_error
+    // f_throw(2); // simpleException
+    f_throw(3); // std::unexpected
+  } catch(const std::logic_error& le) {
+    std::cout << le.what() << std::endl;
+  } catch(const simpleException& se) {
+    se.what();
+  }
+}
+// Exceptions in initializer list
+void challenge7() {
+  try {
+    C obj;
+  } catch (const std::logic_error& le) {
+    std::cout << "Emulation of exception in initializer list failed" << std::endl;
+  }
+}
 /* -------------------- */
 int main() {
   // challenge1();
   // challenge2();
   // challenge3();
   // challenge4();
-  challenge5();
+  // challenge5();
+  // challenge6();
+  challenge7();
   return 0;
 }
