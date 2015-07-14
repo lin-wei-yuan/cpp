@@ -1,2 +1,2 @@
-exceptions.out
-pointers.out
+*.out
+*.class
