@@ -11,7 +11,7 @@ pointers:
 	./pointers.out
 
 containers:
-	$(CC) $(FLAGS11) containers.cpp -o containers.out
+	$(CC) $(FLAGS) containers.cpp -o containers.out
 	./containers.out
 
 virtual:
