@@ -1,8 +1,9 @@
 CC = g++
 FLAGS = -g -Wall -pedantic -rdynamic
+FLAGS11 = $(FLAGS) -std=c++11
 
 exceptions:
-	$(CC) $(FLAGS) -std=c++11 exceptions.cpp -o exceptions.out
+	$(CC) $(FLAGS)  exceptions.cpp -o exceptions.out
 	./exceptions.out
 
 pointers:
@@ -10,18 +11,18 @@ pointers:
 	./pointers.out
 
 containers:
-	$(CC) $(FLAGS) containers.cpp -o containers.out
+	$(CC) $(FLAGS11) containers.cpp -o containers.out
 	./containers.out
 
 virtual:
-	$(CC) $(FLAGS) -std=c++11 virtual.cpp -o virtual.out
+	$(CC) $(FLAGS11) virtual.cpp -o virtual.out
 	./virtual.out
 
 vtable:
-	$(CC) $(FLAGS) -std=c++11 -fdump-class-hierarchy vtable.cpp -o vtable.out
+	$(CC) $(FLAGS) -fdump-class-hierarchy vtable.cpp -o vtable.out
 	./vtable.out
 
 
 typecast:
-	$(CC) $(FLAGS) -std=c++11 typecast.cpp -o typecast.out
+	$(CC) $(FLAGS11) typecast.cpp -o typecast.out
 	./typecast.out
