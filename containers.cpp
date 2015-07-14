@@ -153,11 +153,33 @@ void challenge2() {
   // List operations
   list<int> l4 (numbers, numbers + 5);
   list<int> l5 (numbers, numbers + 5);
+  // O(size() + size() - 1)
   l4.merge(l5);
   print<list<int> >(l4);
   print<list<int> >(l5); // Empty
 
+  list<int> l6 (numbers, numbers + 5);
+  print<list<int> >(l6);
+  // O(n)
+  l6.reverse();
+  print<list<int> >(l6);
+  // O(nlog(n))
+  l6.sort();
+  print<list<int> >(l6);
+
+  print<list<int> >(l4);
+  // O(n)
+  l4.unique();
+  print<list<int> >(l4);
 }
+
+template<typename T>
+struct greater_than
+{
+  bool operator() (const T& l, const T& r) const {
+    return l > r;
+  }
+};
 
 /* Set */
 void challenge3() {
@@ -183,11 +205,17 @@ void challenge3() {
   // O(1) if before of after result.first, else O(logn)
   set<int>::iterator it = s1.insert(result.first, 8);
   cout << (*it) << endl;
+  // STL comparer
+  set<int, std::greater<int> > s2 (numbers, numbers + 10);
+  print<set<int, std::greater<int> > >(s2);
+  // Custom comparer
+  set<int, greater_than<int> > s3 (numbers, numbers + 10);
+  print<set<int, greater_than<int> > >(s3);
 }
 
 int main() {
   // challenge1();
-  challenge2();
-  // challenge3();
+  // challenge2();
+  challenge3();
   return 0;
 }

@@ -18,6 +18,8 @@ void challenge0() {
 
   cout << "pi = " << pi << ", *pi = " << *pi << ", size = " << sizeof(pi) <<  endl;
   cout << " size *pi =" << sizeof(*pi) << endl;
+
+  delete pi;
 }
 
 void challenge1() {
@@ -43,19 +45,6 @@ void challenge1() {
   // delete p2;
   delete p3;
   delete p4;
-}
-
-inline int tempf() {
-  return 1;
-}
-
-void challenge2() {
-  // compile error
-  // int& temp = 1;
-  // int& temp = tempf();
-  const int& temp1 = 1;
-  // compile error
-  // temp1 = 2;
 }
 
 int main() {
