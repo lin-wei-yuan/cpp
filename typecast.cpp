@@ -1,3 +1,9 @@
+// #define DEBUG_SHOW_DUMP_CHALLENGE_2
+#pragma GCC diagnostic ignored "-Wunused-variable"
+
+// Prevent big size of .class file
+#ifndef DEBUG_SHOW_DUMP_CHALLENGE_2
+
 #include <iostream>
 #include <typeinfo>
 using namespace std;
@@ -75,51 +81,125 @@ public:
   BnonVirtual() { cout << "BnonVirtual::BnonVirtual()" << endl; }
   ~BnonVirtual() { cout << "BnonVirtual::~BnonVirtual()" << endl; }
 };
+#endif
+/* end define */
 
 class Base {
 public:
-  Base() { cout << "Base::Base()" << endl; }
-  virtual ~Base() { cout << "Base::~Base()" << endl; }
-  virtual void print() { cout << "Base::print()" << endl; }
+  Base() {
+    #ifndef DEBUG_SHOW_DUMP_CHALLENGE_2
+      cout << "Base::Base()" << endl;
+    #endif
+  }
+  virtual ~Base() {
+    #ifndef DEBUG_SHOW_DUMP_CHALLENGE_2
+      cout << "Base::~Base()" << endl;
+    #endif
+  }
+  virtual void print() {
+    #ifndef DEBUG_SHOW_DUMP_CHALLENGE_2
+      cout << "Base::print()" << endl;
+    #endif
+  }
 };
 
 class A : public Base {
 public:
-  A() { cout << "A::A()" << endl; }
-  ~A() { cout << "A::~A()" << endl; }
-  virtual void print() { cout << "A::print()" << endl; }
+  A() {
+    #ifndef DEBUG_SHOW_DUMP_CHALLENGE_2
+      cout << "A::A()" << endl;
+    #endif
+  }
+  virtual ~A() {
+    #ifndef DEBUG_SHOW_DUMP_CHALLENGE_2
+      cout << "A::~A()" << endl;
+    #endif
+  }
+  virtual void print() {
+    #ifndef DEBUG_SHOW_DUMP_CHALLENGE_2
+      cout << "A::print()" << endl;
+    #endif
+  }
 };
 
 class B : public A {
 public:
-  B() { cout << "B::B()" << endl; }
-  ~B() { cout << "B::~B()" << endl; }
-  virtual void print() { cout << "B::print()" << endl; }
+  B() {
+    #ifndef DEBUG_SHOW_DUMP_CHALLENGE_2
+      cout << "B::B()" << endl;
+    #endif
+  }
+  virtual ~B() {
+    #ifndef DEBUG_SHOW_DUMP_CHALLENGE_2
+      cout << "B::~B()" << endl;
+    #endif
+  }
+  virtual void print() {
+    #ifndef DEBUG_SHOW_DUMP_CHALLENGE_2
+      cout << "B::print()" << endl;
+    #endif
+  }
 };
 
 void challenge2() {
+  // Use non polymorphic classes
   // source type is not polymorphic - compile error
   // nonVirtual* nv = new nonVirtual();
   // BnonVirtual* bnv = dynamic_cast<BnonVirtual*>(nv);
+
+  // Use polymorphic
+  // Upcast(from derived class to base)
   B* b = new B;
   Base* tmp_base = new Base;
   if (Base* base = dynamic_cast<Base*>(b)) {
     base->print();
   } else {
+    #ifndef DEBUG_SHOW_DUMP_CHALLENGE_2
     cout << "base is null" << endl;
+    #endif
   }
-
+  // Crosscast
   if (A* a = dynamic_cast<A*>(b)) {
     a->print();
   } else {
+    #ifndef DEBUG_SHOW_DUMP_CHALLENGE_2
     cout << "a is null" << endl;
+    #endif
+  }
+  // Downcast
+  // tmp_b == null
+  if (B* tmp_b = dynamic_cast<B*>(tmp_base)) {
+    tmp_b->print();
+  } else {
+    #ifndef DEBUG_SHOW_DUMP_CHALLENGE_2
+    cout << "tmp_b is null" << endl;
+    #endif
   }
   delete b;
+}
+
+typedef void(B::*pmemory)();
+typedef void(Base::*pmemory_polymoph)();
+
+// Pointer to member
+void challenge3() {
+  B* b = new B;
+  pmemory p = &B::print;
+  b->print(); // direct call
+  (b->*p)();
+  delete b;
+  // Polymorph classes
+  Base* base = new B;
+  pmemory_polymoph pp = &Base::print;
+  base->print();
+  (base->*pp)();
+  delete base;
 }
 
 int main() {
   // challenge0();
   // challenge1();
-  challenge2();
+  // challenge2();
+  challenge3();
   return 0;
 }

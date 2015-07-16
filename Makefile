@@ -24,5 +24,5 @@ vtable:
 
 
 typecast:
-	$(CC) $(FLAGS11) typecast.cpp -o typecast.out
+	$(CC) $(FLAGS11) -fdump-class-hierarchy typecast.cpp -o typecast.out
 	./typecast.out
