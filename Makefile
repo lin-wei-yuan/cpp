@@ -22,7 +22,10 @@ vtable:
 	$(CC) $(FLAGS) -fdump-class-hierarchy vtable.cpp -o vtable.out
 	./vtable.out
 
-
 typecast:
 	$(CC) $(FLAGS11) -fdump-class-hierarchy typecast.cpp -o typecast.out
 	./typecast.out
+
+references:
+	$(CC) $(FLAGS11) references.cpp -o references.out
+	./references.out

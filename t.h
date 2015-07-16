@@ -14,16 +14,22 @@ public:
     std::cout << "Default T::ctor called. id = 0" << std::endl;
   }
   T(int _id) : id(_id) {
-    std::cout << "T::Ctor with params called. id =" << id << std::endl;
+    std::cout << "T::Ctor with params called. id = " << id << std::endl;
   }
   T(const T& that) : id(that.getID()) {
-    std::cout<< "Copy T::ctor called. Source=" << that.getID() << std::endl;
+    std::cout<< "Copy T::ctor called. Source = " << that.getID() << std::endl;
   }
   T(T&& that) : id(that.getID()) {
-    std::cout << "Move T::ctor called. Source=" << that.getID() << std::endl;
+    std::cout << "Move T::ctor called. Source = " << that.getID() << std::endl;
   }
   ~T() {
     std::cout << "~T::dtor called.  id = " << id << std::endl;
+  }
+
+  T& operator=(T& that) {
+    std::cout<< "Copy T::operator without const parameter called. Source = " << that.getID() << std::endl;
+    id = that.getID();
+    return *this;
   }
 
   T& operator=(const T& that) {
@@ -31,13 +37,21 @@ public:
     id = that.getID();
     return *this;
   }
+
   T& operator=(T&& that) {
     std::cout << "Move T::operator called. Source = " << that.getID() << std::endl;
     id = that.getID();
     return *this;
   }
 
+  friend std::ostream& operator << (std::ostream& out,  const T& that) {
+    out << that.id;
+    return out;
+  }
+
   int getID() const { return id; }
+
+  void setID(int _id) { id = _id; }
 };
 
 class A {
