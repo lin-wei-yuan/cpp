@@ -148,7 +148,7 @@ void challenge2() {
   // BnonVirtual* bnv = dynamic_cast<BnonVirtual*>(nv);
 
   // Use polymorphic
-  // Upcast(from derived class to base)
+  // Upcasting(from derived class to base)
   B* b = new B;
   Base* tmp_base = new Base;
   if (Base* base = dynamic_cast<Base*>(b)) {
@@ -158,7 +158,7 @@ void challenge2() {
     cout << "base is null" << endl;
     #endif
   }
-  // Crosscast
+  // Crosscasting
   if (A* a = dynamic_cast<A*>(b)) {
     a->print();
   } else {
@@ -166,7 +166,7 @@ void challenge2() {
     cout << "a is null" << endl;
     #endif
   }
-  // Downcast
+  // Downcasting
   // tmp_b == null
   if (B* tmp_b = dynamic_cast<B*>(tmp_base)) {
     tmp_b->print();
