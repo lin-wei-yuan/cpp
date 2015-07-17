@@ -28,32 +28,45 @@ private:
   size_t m_capacity;
   iterator m_begin;
   iterator m_end;
+  // @TODO: For fix memory leak, if exception caused
+  class _array {
+    _array() { }
+    ~_array() { }
+  };
 
 public:
   /*!
-   * Default constructor creates no elements.
+   * @brief Default constructor creates no elements.
    */
   vec()
   : m_size(0)
   , m_capacity(0)
+  , m_begin(nullptr)
+  , m_end(nullptr)
   {
     m_arr = new value_type[m_size];
   }
   /*!
-   * Creates a vector with default constructed elements.
+   * @brief Creates a vector with default constructed elements.
    * @param[in] size The number of elements to initially create.
    */
   vec(size_t size)
   : m_size(size)
   , m_capacity(size)
+  , m_begin(nullptr)
+  , m_end(nullptr)
   {
     m_arr = new value_type[size];
     for (size_t i = 0; i < size; ++i) {
       m_arr[i] = 0;
     }
+    if (size > 0) {
+      /* code */
+      m_begin = m_arr[0];
+    }
   }
   /*!
-   * Creates a vector with default constructed elements.
+   * @brief Creates a vector with default constructed elements.
    * @param[in] size The number of elements to initially create.
    * @param[in] element An element to copy.
    */
@@ -67,7 +80,7 @@ public:
     }
   }
   /*!
-   * Vector copy constructor.
+   * @brief Vector copy constructor.
    * @param[in] other A vector of identical elemen
    */
   vec(const vec<value_type>& other) {
@@ -82,6 +95,8 @@ public:
   }
 
   /*!
+   * @brief Dtor
+   *
    * The dtor only erases the elements, and note that if the elements themselves
    * are pointers, the pointed-to memory is not touched in any way.
    * Managing the pointer is the user's responsibility.
@@ -91,21 +106,29 @@ public:
     delete[] m_arr;
   }
   /*!
-   * Returns size of vector
+   * @brief Returns size of vector
    */
   size_t size() const { return m_size; }
   /*!
-   * Returns current capacity
+   * @brief Returns current capacity
    */
   size_t capacity() const { return m_capacity; }
   /*!
-   * Returns true if size of vector > 0, overwise false
+   * @brief Returns true if size of vector > 0, overwise false
    */
   bool empty() const { return m_size == 0; }
 
+  iterator begin() { return m_begin; }
+
+  iterator end() { return m_end; }
+
+  const_iterator begin() const { return m_begin; }
+
+  const_iterator end() const { return m_end;}
+
   /*!
-   * Subscript access to the data contained in the vector.
-   * No index check
+   * @brief Subscript access to the data contained in the vector.
+   *        No index check
    * @param  index Index in vector
    * @return       Element
    */
@@ -113,8 +136,8 @@ public:
     return m_arr[index];
   }
   /*!
-   * Read access to the data contained in vector
-   * No index check
+   * @brief Read access to the data contained in vector
+   *        No index check
    * @param  index Index in vector
    * @return       Element
    */
@@ -122,8 +145,8 @@ public:
     return m_arr[index];
   }
   /*!
-   * Full access to element in vector
-   * Generate out_of_range id index >= size
+   * @brief Full access to element in vector
+   *        Generate out_of_range id index >= size
    * @param  index Index in vector
    * @return       Element
    */
@@ -135,8 +158,8 @@ public:
     return m_arr[index];
   }
   /*!
-   * Only read access to element in vector
-   * Generate out_of_range id index >= size
+   * @brief Only read access to element in vector
+   *        Generate out_of_range id index >= size
    * @param  index Index in vector
    * @return       Element
    */
