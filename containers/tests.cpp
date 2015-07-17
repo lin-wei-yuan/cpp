@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
-#include "./vec.h"
+#include <cassert>
+#include "./src/vec.h"
 using namespace std;
 using containers::vec;
 
@@ -21,8 +22,15 @@ void print(const T& container) {
 }
 
 template<typename T, typename X>
-void assert(const T& c1, const X& c2) {
-
+void unit(const T& c1, const X& c2) {
+  static int test_id = 1;
+  assert(c1.size() == c2.size());
+  assert(c1.capacity() == c2.capacity());
+  for (size_t i = 0; i < c1.size(); ++i) {
+    assert(c1.at(i) == c2.at(i));
+  }
+  cout << "#" << test_id <<" Passed!" << endl;
+  test_id++;
 }
 
 // comparison of vec and std::vector
@@ -30,18 +38,15 @@ void challenge0() {
   // ctors
   vec<int> v0;
   vector<int> stl_v0;
-  print<vec<int>>(v0);
-  print<vector<int>>(stl_v0);
+  unit(v0, stl_v0);
 
   vec<int> v1(4, 100);
   vector<int> stl_v1(4, 100);
-  print<vec<int>>(v1);
-  print<vector<int>>(stl_v1);
+  unit(v1, stl_v1);
 
   vec<int> v2(v1);
   vector<int> stl_v2(stl_v1);
-  print<vec<int>>(v2);
-  print<vector<int>>(stl_v2);
+  unit(v2, stl_v2);
 }
 
 int main() {

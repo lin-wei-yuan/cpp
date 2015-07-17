@@ -33,35 +33,38 @@ public:
   /*!
    * Default constructor creates no elements.
    */
-  vec() {
-    m_arr = new value_type[0];
-    m_size = 0;
-    m_capacity = 0;
+  vec()
+  : m_size(0)
+  , m_capacity(0)
+  {
+    m_arr = new value_type[m_size];
   }
   /*!
    * Creates a vector with default constructed elements.
    * @param[in] size The number of elements to initially create.
    */
-  vec(size_t size) {
+  vec(size_t size)
+  : m_size(size)
+  , m_capacity(size)
+  {
     m_arr = new value_type[size];
     for (size_t i = 0; i < size; ++i) {
       m_arr[i] = 0;
     }
-    m_size = size;
-    m_capacity = size;
   }
   /*!
    * Creates a vector with default constructed elements.
    * @param[in] size The number of elements to initially create.
    * @param[in] element An element to copy.
    */
-  vec(size_t size, const value_type& element) {
+  vec(size_t size, const value_type& element)
+    : m_size(size)
+    , m_capacity(size)
+  {
     m_arr = new value_type[size];
     for (size_t i = 0; i < size; ++i) {
       m_arr[i] = element;
     }
-    m_size = size;
-    m_capacity = size;
   }
   /*!
    * Vector copy constructor.
@@ -73,8 +76,7 @@ public:
     m_size = other.size();
     m_capacity = other.capacity();
     for (size_t i = 0; i < other.size(); ++i) {
-      // @TODO: fix
-      m_arr[i] = other[i];
+      m_arr[i] = other.at(i);
     }
     // @TODO: init iterators
   }
@@ -126,6 +128,19 @@ public:
    * @return       Element
    */
   reference at(int index) {
+    if (index >= m_size) {
+      // @TODO: fix memory leak
+      throw std::out_of_range("vec::_M_range_check");
+    }
+    return m_arr[index];
+  }
+  /*!
+   * Only read access to element in vector
+   * Generate out_of_range id index >= size
+   * @param  index Index in vector
+   * @return       Element
+   */
+  const_reference at(int index) const {
     if (index >= m_size) {
       // @TODO: fix memory leak
       throw std::out_of_range("vec::_M_range_check");
