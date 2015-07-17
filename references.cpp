@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include "t.h"
+#include "vector.h"
 using namespace std;
 
 inline T tempf() {
@@ -46,62 +47,6 @@ void challenge1() {
   // T& const temp6 = 6; //cannot be applied
 }
 
-/* Vector implementation */
-template<typename U>
-class vec
-{
-  U* m_arr;
-  size_t m_size;
-  size_t m_capacity;
-public:
-  vec(size_t size, U element) {
-    m_arr = new int[size];
-    for (size_t i = 0; i < size; ++i) {
-      m_arr[i] = element;
-    }
-    m_size = size;
-    m_capacity = size;
-  }
-
-  vec() {
-    m_arr = new int[0];
-    m_size = 0;
-    m_capacity = 0;
-  }
-
-  vec(size_t size) {
-    m_arr = new int[size];
-    for (size_t i = 0; i < size; ++i) {
-      m_arr[i] = 0;
-    }
-    m_size = size;
-    m_capacity = size;
-  }
-
-  vec(const vec<U>& other) {
-
-  }
-
-  ~vec() {
-    delete[] m_arr;
-  }
-
-  size_t size() const { return m_size; }
-  size_t capacity() const { return m_capacity; }
-
-  U& operator[](int index) noexcept {
-    return m_arr[index];
-  }
-};
-
-void challenge2() {
-  vec<int> v;
-  vector<int> stl_v;
-  cout << v.size() << ", " << v.capacity() << endl;
-  cout << stl_v.size() << ", " << stl_v.capacity() << endl;
-}
-
 int main() {
-  // challenge1();
-  challenge2();
+  challenge1();
 }
