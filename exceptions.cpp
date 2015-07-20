@@ -154,6 +154,17 @@ void challenge7() {
     std::cout << "Emulation of exception in initializer list failed" << std::endl;
   }
 }
+
+// yet another bad practice to prevent memory leaks
+void challenge8() {
+  T* test;
+  try{
+    test = new T;
+    throw std::logic_error("Logic error");
+  } catch(...) {
+    delete test;
+  }
+}
 /* -------------------- */
 int main() {
   // challenge1();
@@ -162,6 +173,7 @@ int main() {
   // challenge4();
   // challenge5();
   // challenge6();
-  challenge7();
+  // challenge7();
+  challenge8();
   return 0;
 }

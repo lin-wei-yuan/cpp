@@ -1,3 +1,5 @@
 containers/docs
 *.out
 *.class
+*.s
+*.dump

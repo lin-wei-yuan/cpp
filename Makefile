@@ -3,7 +3,7 @@ FLAGS = -g -Wall -pedantic -rdynamic
 FLAGS11 = $(FLAGS) -std=c++11
 
 exceptions:
-	$(CC) $(FLAGS)  exceptions.cpp -o exceptions.out
+	$(CC) $(FLAGS11) exceptions.cpp -o exceptions.out
 	./exceptions.out
 
 pointers:
@@ -33,3 +33,7 @@ references:
 types:
 	$(CC) $(FLAGS11) types.cpp -o types.out
 	./types.out
+
+asm:
+	$(CC) -S -o asm.s asm.cpp
+	objdump -S --disassemble asm.out > asm.dump
