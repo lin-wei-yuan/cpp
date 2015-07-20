@@ -1,7 +1,16 @@
 #include <cstddef>
 #include <stdexcept>
+#include <cstdio>
 
 #define _DEBUG
+
+#if __cplusplus >= 201103L
+  #define __NOEXCEPT noexcept
+  #define __NULLPTR nullptr
+#else
+  #define __NOEXCEPT throw()
+  #define __NULLPTR NULL
+#endif
 
 namespace containers {
 
@@ -31,38 +40,6 @@ private:
   size_t m_capacity;
   iterator m_begin;
   iterator m_end;
-
-public:
-  /*!
-   * @brief Default constructor creates no elements.
-   */
-  vec()
-  : m_size(0)
-  , m_capacity(0)
-  , m_begin(nullptr)
-  , m_end(nullptr)
-  {
-    m_arr = new value_type[m_size];
-  }
-
-  /*!
-   * @brief Creates a vector with default constructed elements.
-   * @param[in] size The number of elements to initially create.
-   */
-  vec(size_t size)
-  : m_size(size)
-  , m_capacity(size)
-  , m_begin(nullptr)
-  , m_end(nullptr)
-  {
-    m_arr = new value_type[size];
-    for (size_t i = 0; i < size; ++i) {
-      m_arr[i] = 0;
-    }
-    _iterators();
-  }
-
-private:
   /*!
    * @brief init iterators
    */
@@ -75,12 +52,50 @@ private:
 
 public:
   /*!
+   * @brief Default constructor creates no elements.
+   */
+  vec()
+  : m_size(0)
+  , m_capacity(0)
+  , m_begin(__NULLPTR)
+  , m_end(__NULLPTR)
+  {
+    m_arr = new value_type[m_size];
+  }
+
+  /*!
+   * @brief Creates a vector with default constructed elements.
+   * @param[in] size The number of elements to initially create.
+   */
+  vec(size_t size)
+  : m_size(size)
+  , m_capacity(size)
+  , m_begin(__NULLPTR)
+  , m_end(__NULLPTR)
+  {
+    m_arr = new value_type[size];
+    for (size_t i = 0; i < size; ++i) {
+      // @TODO: fix this
+      m_arr[i] = value_type();
+    }
+    _iterators();
+  }
+
+public:
+  /*!
    * @brief Creates a vector with default constructed elements.
    * @param[in] size The number of elements to initially create.
    * @param[in] element An element to copy.
    */
   vec(size_t size, const value_type& element)
+#if __cplusplus >= 201103L
     : vec(size)
+#else
+    : m_size(size)
+    , m_capacity(size)
+    , m_begin(__NULLPTR)
+    , m_end(__NULLPTR)
+#endif
   {
     m_arr = new value_type[size];
     for (size_t i = 0; i < size; ++i) {
@@ -94,7 +109,14 @@ public:
    * @param[in] other A vector of identical elemen
    */
   vec(const vec<value_type>& other)
+#if __cplusplus >= 201103L
     : vec()
+#else
+    : m_size(0)
+    , m_capacity(0)
+    , m_begin(__NULLPTR)
+    , m_end(__NULLPTR)
+#endif
    {
     size_t size = (other.size() < other.capacity()) ? other.capacity() : other.size();
     m_arr = new value_type[size];
@@ -107,12 +129,19 @@ public:
   }
 
   /*!
-   * @brief
-   * @param[in] _begin
-   * @param[in] _end
+   * @brief Builds a vec from a range.
+   * @param[in] _begin An input iterator.
+   * @param[in] _end An input iterator.
    */
   vec(const_iterator _begin, const_iterator _end)
+#if __cplusplus >= 201103L
     : vec()
+#else
+    : m_size(0)
+    , m_capacity(0)
+    , m_begin(__NULLPTR)
+    , m_end(__NULLPTR)
+#endif
   {
     size_t dist = std::distance(_begin, _end);
     m_arr = new value_type[dist];
@@ -131,7 +160,7 @@ public:
    * are pointers, the pointed-to memory is not touched in any way.
    * Managing the pointer is the user's responsibility.
    */
-  ~vec() {
+  ~vec() __NOEXCEPT {
     #ifdef _DEBUG
       printf("vec::~vec called \n");
     #endif
@@ -142,45 +171,45 @@ public:
   /*!
    * @brief Returns size of vector
    */
-  size_t size() const { return m_size; }
+  size_t size() const __NOEXCEPT { return m_size; }
 
   /*!
    * @brief Returns current capacity
    */
-  size_t capacity() const { return m_capacity; }
+  size_t capacity() const __NOEXCEPT { return m_capacity; }
 
   /*!
    * @brief Returns true if size of vector > 0, overwise false
    */
-  bool empty() const { return m_size == 0; }
+  bool empty() const __NOEXCEPT { return m_size == 0; }
 
   /*!
    *  @brief Returns a read/write iterator that points to the first
    *  element in the vec. Iteration is done in ordinary
    *  element order.
    */
-  iterator begin() { return m_begin; }
+  iterator begin() __NOEXCEPT { return m_begin; }
 
   /*!
    *  @brief Returns a read/write iterator that points to the one past
    *  the last element in the vec. Iteration is done in ordinary
    *  element order.
    */
-  iterator end() { return m_end; }
+  iterator end() __NOEXCEPT { return m_end; }
 
   /*!
    *  @brief Returns a read-only iterator that points to the first
    *  element in the vec. Iteration is done in ordinary
    *  element order.
    */
-  const_iterator begin() const { return m_begin; }
+  const_iterator begin() const __NOEXCEPT { return m_begin; }
 
   /*!
    *  @brief Returns a read-only iterator that points to the one past
    *  the last element in the vec. Iteration is done in ordinary
    *  element order.
    */
-  const_iterator end() const { return m_end;}
+  const_iterator end() const __NOEXCEPT { return m_end;}
 
   /*!
    * @brief Subscript access to the data contained in the vector.
@@ -188,7 +217,7 @@ public:
    * @param  index Index in vector
    * @return       Element
    */
-  reference operator[](int index) noexcept {
+  reference operator[](int index) __NOEXCEPT {
     return m_arr[index];
   }
 
@@ -198,7 +227,7 @@ public:
    * @param  index Index in vector
    * @return       Element
    */
-  const_reference operator[](int index) const noexcept {
+  const_reference operator[](int index) const __NOEXCEPT {
     return m_arr[index];
   }
 

@@ -6,6 +6,14 @@
 using namespace std;
 using containers::vec;
 
+
+class A
+{
+public:
+  A() { cout << "A::A()" << endl; }
+  ~A() { cout << "A::~A()" << endl; }
+};
+
 template<typename T>
 void print(const T& container) {
   cout << endl;
@@ -47,9 +55,8 @@ void unit(const T& c1, const X& c2) {
   test_id++;
 }
 
-// comparison of vec and std::vector
+// comparison of vec and std::vector ctors
 void challenge0() {
-  // ctors
   vec<int> v0;
   vector<int> stl_v0;
   unit(v0, stl_v0);
@@ -71,7 +78,16 @@ void challenge0() {
   unit(v4, stl_v4);
 }
 
+void challenge1() {
+  vec<A> test(4);
+  // vector<A> stl_test(4);
+
+  // A* arr = new A[4];
+  // delete[] arr;
+}
+
 int main() {
-  challenge0();
+  // challenge0();
+  challenge1();
   return 0;
 }
