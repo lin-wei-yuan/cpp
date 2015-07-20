@@ -5,6 +5,22 @@ using namespace std;
 
 // #define _DEBUG
 
+class Base {
+public:
+  virtual void print() const = 0;
+  virtual ~Base() {}
+};
+
+class Derived_1 : public Base {
+public:
+  void print_2();
+};
+
+class Derived_2 : public Base{
+public:
+  void print() const override {};
+};
+
 class D
 {
   T first;
@@ -44,7 +60,7 @@ public:
   void print_2() const { cout << "E::print_2() const" << endl; }
 };
 
-int main() {
+void challenge1() {
   std::vector<D*> v;
   v.push_back(new D);
   v.push_back(new E);
@@ -54,4 +70,15 @@ int main() {
     v.at(i)->print_2();
     delete v.at(i);
   }
+}
+
+void challenge2() {
+    // Base* test = new Derived_1; // abstract
+  Base* test = new Derived_2;
+  delete test;
+}
+
+int main() {
+  // challenge1();
+  challenge2();
 }
