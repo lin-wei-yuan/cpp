@@ -29,3 +29,7 @@ typecast:
 references:
 	$(CC) $(FLAGS11) references.cpp -o references.out
 	./references.out
+
+types:
+	$(CC) $(FLAGS11) types.cpp -o types.out
+	./types.out
