@@ -33,7 +33,3 @@ references:
 types:
 	$(CC) $(FLAGS11) types.cpp -o types.out
 	./types.out
-
-asm:
-	$(CC) -S -o asm.s asm.cpp
-	objdump -S --disassemble asm.out > asm.dump
