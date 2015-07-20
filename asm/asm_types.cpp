@@ -6,7 +6,9 @@
   .type  main, @function
 main:
 .LFB0:
-  .cfi_startproc // start block
+  // CFI - call frame information
+  // .cfi_startproc  is used at the beginning of each function
+  .cfi_startproc
   pushq  %rbp // save frame pointer
   .cfi_def_cfa_offset 16
   .cfi_offset 6, -16
@@ -45,6 +47,8 @@ main:
   popq  %rbp // pop quad - restore frame pointer(pointer size - 64 bit - 8byte(x64 system))
   .cfi_def_cfa 7, 8
   ret // return from app
+  // .cfi_endproc is used at the end of a function
+  // where it closes its unwind entry previously opened by .cfi_startproc
   .cfi_endproc
 .LFE0:
   .size  main, .-main
