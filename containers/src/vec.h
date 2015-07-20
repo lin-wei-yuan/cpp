@@ -44,6 +44,7 @@ public:
   {
     m_arr = new value_type[m_size];
   }
+
   /*!
    * @brief Creates a vector with default constructed elements.
    * @param[in] size The number of elements to initially create.
@@ -79,8 +80,7 @@ public:
    * @param[in] element An element to copy.
    */
   vec(size_t size, const value_type& element)
-    : m_size(size)
-    , m_capacity(size)
+    : vec(size)
   {
     m_arr = new value_type[size];
     for (size_t i = 0; i < size; ++i) {
@@ -88,11 +88,14 @@ public:
     }
     _iterators();
   }
+
   /*!
    * @brief Vector copy constructor.
    * @param[in] other A vector of identical elemen
    */
-  vec(const vec<value_type>& other) {
+  vec(const vec<value_type>& other)
+    : vec()
+   {
     size_t size = (other.size() < other.capacity()) ? other.capacity() : other.size();
     m_arr = new value_type[size];
     m_size = other.size();
@@ -104,6 +107,24 @@ public:
   }
 
   /*!
+   * @brief
+   * @param[in] _begin
+   * @param[in] _end
+   */
+  vec(const_iterator _begin, const_iterator _end)
+    : vec()
+  {
+    size_t dist = std::distance(_begin, _end);
+    m_arr = new value_type[dist];
+    for (const_iterator it = _begin; it != _end; ++it) {
+      m_arr[m_size++] = *it;
+    }
+    m_size = dist;
+    m_capacity = dist;
+    _iterators();
+  }
+
+  /*!
    * @brief Dtor
    *
    * The dtor only erases the elements, and note that if the elements themselves
@@ -111,28 +132,54 @@ public:
    * Managing the pointer is the user's responsibility.
    */
   ~vec() {
+    #ifdef _DEBUG
+      printf("vec::~vec called \n");
+    #endif
     // @TODO: fix
     delete[] m_arr;
   }
+
   /*!
    * @brief Returns size of vector
    */
   size_t size() const { return m_size; }
+
   /*!
    * @brief Returns current capacity
    */
   size_t capacity() const { return m_capacity; }
+
   /*!
    * @brief Returns true if size of vector > 0, overwise false
    */
   bool empty() const { return m_size == 0; }
 
+  /*!
+   *  @brief Returns a read/write iterator that points to the first
+   *  element in the vec. Iteration is done in ordinary
+   *  element order.
+   */
   iterator begin() { return m_begin; }
 
+  /*!
+   *  @brief Returns a read/write iterator that points to the one past
+   *  the last element in the vec. Iteration is done in ordinary
+   *  element order.
+   */
   iterator end() { return m_end; }
 
+  /*!
+   *  @brief Returns a read-only iterator that points to the first
+   *  element in the vec. Iteration is done in ordinary
+   *  element order.
+   */
   const_iterator begin() const { return m_begin; }
 
+  /*!
+   *  @brief Returns a read-only iterator that points to the one past
+   *  the last element in the vec. Iteration is done in ordinary
+   *  element order.
+   */
   const_iterator end() const { return m_end;}
 
   /*!
@@ -144,6 +191,7 @@ public:
   reference operator[](int index) noexcept {
     return m_arr[index];
   }
+
   /*!
    * @brief Read access to the data contained in vector
    *        No index check
@@ -153,6 +201,7 @@ public:
   const_reference operator[](int index) const noexcept {
     return m_arr[index];
   }
+
   /*!
    * @brief Full access to element in vector
    *        Generate out_of_range id index >= size
@@ -166,6 +215,7 @@ public:
     }
     return m_arr[index];
   }
+
   /*!
    * @brief Only read access to element in vector
    *        Generate out_of_range id index >= size

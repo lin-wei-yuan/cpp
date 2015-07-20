@@ -65,6 +65,10 @@ void challenge0() {
   vec<int> v3(v1);
   vector<int> stl_v3(stl_v1);
   unit(v3, stl_v3);
+
+  vec<int> v4(v2.begin(), v2.end());
+  vector<int> stl_v4(stl_v2.begin(), stl_v2.end());
+  unit(v4, stl_v4);
 }
 
 int main() {
