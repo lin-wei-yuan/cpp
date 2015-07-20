@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <cassert>
+#include <typeinfo>
 #include "./src/vec.h"
 using namespace std;
 using containers::vec;
@@ -8,6 +9,7 @@ using containers::vec;
 template<typename T>
 void print(const T& container) {
   cout << endl;
+  cout << "Typename " << typeid(container).name() << endl;
   cout << "Container: size[" << container.size() << "]";
   cout << " capacity[" << container.capacity() << "]" << endl;
   cout << "Elements: " << endl;
@@ -15,8 +17,13 @@ void print(const T& container) {
     cout << "Empty" << endl;
     return;
   }
+  cout << "By index : ";
   for (size_t i = 0; i < container.size(); ++i) {
     cout << container[i] << " ";
+  }
+  cout << endl << "Iterator : ";
+  for (typename T::const_iterator it = container.begin(); it != container.end(); ++it) {
+    cout << *it << " ";
   }
   cout << endl;
 }
@@ -28,12 +35,15 @@ void unit(const T& c1, const X& c2) {
   assert(c1.capacity() == c2.capacity());
   if (c1.size() > 0) {
     assert(*(c1.begin()) == *(c2.begin()));
-    assert(*(c1.end()) == *(c2.end()));
   }
   for (size_t i = 0; i < c1.size(); ++i) {
     assert(c1.at(i) == c2.at(i));
   }
+  cout << "=---------------------------=" <<endl;
   cout << "#" << test_id <<" Passed!" << endl;
+  print<T>(c1);
+  print<X>(c2);
+  cout << "=---------------------------=" <<endl;
   test_id++;
 }
 
@@ -44,13 +54,17 @@ void challenge0() {
   vector<int> stl_v0;
   unit(v0, stl_v0);
 
-  // vec<int> v1(4, 100);
-  // vector<int> stl_v1(4, 100);
-  // unit(v1, stl_v1);
+  vec<int> v1(5);
+  vector<int> stl_v1(5);
+  unit(v1, stl_v1);
 
-  // vec<int> v2(v1);
-  // vector<int> stl_v2(stl_v1);
-  // unit(v2, stl_v2);
+  vec<int> v2(4, 101);
+  vector<int> stl_v2(4, 101);
+  unit(v2, stl_v2);
+
+  vec<int> v3(v1);
+  vector<int> stl_v3(stl_v1);
+  unit(v3, stl_v3);
 }
 
 int main() {

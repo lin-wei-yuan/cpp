@@ -1,6 +1,8 @@
 #include <cstddef>
 #include <stdexcept>
 
+#define _DEBUG
+
 namespace containers {
 
 /*!
@@ -17,6 +19,7 @@ namespace containers {
 template<typename value_type>
 class vec
 {
+public:
   typedef value_type* iterator;
   typedef const value_type* const_iterator;
   typedef value_type& reference;
@@ -28,11 +31,6 @@ private:
   size_t m_capacity;
   iterator m_begin;
   iterator m_end;
-  // @TODO: For fix memory leak, if exception caused
-  class _array {
-    _array() { }
-    ~_array() { }
-  };
 
 public:
   /*!
@@ -60,11 +58,21 @@ public:
     for (size_t i = 0; i < size; ++i) {
       m_arr[i] = 0;
     }
-    if (size > 0) {
-      /* code */
-      m_begin = m_arr[0];
+    _iterators();
+  }
+
+private:
+  /*!
+   * @brief init iterators
+   */
+  void _iterators() {
+    if (m_size > 0) {
+      m_begin = m_arr;
+      m_end = m_arr + m_size; // get element after last
     }
   }
+
+public:
   /*!
    * @brief Creates a vector with default constructed elements.
    * @param[in] size The number of elements to initially create.
@@ -78,6 +86,7 @@ public:
     for (size_t i = 0; i < size; ++i) {
       m_arr[i] = element;
     }
+    _iterators();
   }
   /*!
    * @brief Vector copy constructor.
@@ -91,7 +100,7 @@ public:
     for (size_t i = 0; i < other.size(); ++i) {
       m_arr[i] = other.at(i);
     }
-    // @TODO: init iterators
+    _iterators();
   }
 
   /*!
