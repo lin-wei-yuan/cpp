@@ -1,7 +1,6 @@
 #include <iostream>
 #include <vector>
 #include "t.h"
-#include "vector.h"
 using namespace std;
 
 inline T tempf() {

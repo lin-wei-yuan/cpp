@@ -1,26 +1,76 @@
-#include <iostream>
-using namespace std;
+// #define _DEBUG
+
+#ifdef _DEBUG
+  #include <iostream>
+  using namespace std;
+#endif
+
 
 class A
 {
 public:
-  virtual void foo() { cout << "A::foo" << endl; }
-  virtual void baz() { cout << "A::baz" << endl; }
-  void bar() {cout << "A::bar" << endl;}
+  A() {
+    #ifdef _DEBUG
+      cout << "A::A" << endl;
+    #endif
+  }
+  virtual void foo() {
+    #ifdef _DEBUG
+      cout << "A::foo" << endl;
+    #endif
+  }
+  virtual void baz() {
+    #ifdef _DEBUG
+      cout << "A::baz" << endl;
+    #endif
+  }
+  void bar() {
+    #ifdef _DEBUG
+      cout << "A::bar" << endl;
+    #endif
+  }
+  virtual ~A() {
+    #ifdef _DEBUG
+      cout << "A::~A" << endl;
+    #endif
+  }
 };
 
 
 class B : public A
 {
 public:
-  void foo() { cout << "B::foo" << endl; }
-  void baz() {cout << "B::baz" << endl;}
-  virtual void bar() {cout << "B::bar" << endl;}
+  B() {
+    #ifdef _DEBUG
+      cout << "B::B" << endl;
+    #endif
+  }
+  void foo() {
+    #ifdef _DEBUG
+      cout << "B::foo" << endl;
+    #endif
+  }
+  void baz() {
+    #ifdef _DEBUG
+      cout << "B::baz" << endl;
+    #endif
+  }
+  void bar() {
+    #ifdef _DEBUG
+      cout << "B::bar" << endl;
+    #endif
+  }
+  virtual ~B() {
+    #ifdef _DEBUG
+      cout << "B::~B" << endl;
+    #endif
+  }
 };
 
 int main() {
-  B* obj = new B;
+  A* obj = new B;
   obj->foo();
   obj->baz();
   obj->bar();
+  delete obj;
 }
