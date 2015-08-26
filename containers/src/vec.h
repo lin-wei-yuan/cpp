@@ -239,7 +239,6 @@ public:
    */
   reference at(int index) {
     if (index >= m_size) {
-      // @TODO: fix memory leak
       throw std::out_of_range("vec::_M_range_check");
     }
     return m_arr[index];
@@ -253,10 +252,22 @@ public:
    */
   const_reference at(int index) const {
     if (index >= m_size) {
-      // @TODO: fix memory leak
       throw std::out_of_range("vec::_M_range_check");
     }
     return m_arr[index];
+  }
+  /**
+   *  @brief  Add data to the end of the %vec.
+   *  @param  __x  Data to be added.
+   *
+   *  This is a typical stack operation.  The function creates an
+   *  element at the end of the %vec and assigns the given data
+   *  to it.  Due to the nature of a %vec this operation can be
+   *  done in constant time if the %vec has preallocated space
+   *  available.
+   */
+  void push_back(const value_type& element) {
+    // @TODO: ...
   }
 };
 } // namespace containers
