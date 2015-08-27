@@ -7,12 +7,28 @@ using namespace std;
 using containers::vec;
 
 
+static int index = 0;
+
 class A
 {
 public:
-  A() { cout << "A::A()" << endl; }
-  ~A() { cout << "A::~A()" << endl; }
+  A() { cout << "A::A()" << endl; set(); }
+  A(A&& that) { cout << "Move A::A()" << endl; set(); }
+  A(const A& that) { cout << "Copy A::A()" << endl; set(); }
+  ~A() { cout << "A::~A()" << endl; set(); }
+
+  A& operator=(const A& that) {cout << "Copy A::operator=" << endl; return *this; }
+  A& operator=(A&& that) {cout << "Copy A::operator=" << endl; return *this; }
+
+  int i() const { return m_i; }
+  void set() { m_i = ++index; }
+private:
+  int m_i;
 };
+ostream& operator<<(ostream& oin, const A& obj) {
+  oin << obj.i();
+  return oin;
+}
 
 template<typename T>
 void print(const T& container) {
@@ -79,15 +95,13 @@ void challenge0() {
 }
 
 void challenge1() {
-  vec<A> test(4);
-  // vector<A> stl_test(4);
-
-  // A* arr = new A[4];
-  // delete[] arr;
+  A tmp;
+  // vec<A> test(2, tmp);
+  vector<A> stl_test(2, tmp);
 }
 
 int main() {
-  // challenge0();
-  challenge1();
+  challenge0();
+  // challenge1();
   return 0;
 }
