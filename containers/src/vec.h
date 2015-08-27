@@ -71,6 +71,8 @@ private:
       m_arr[i].~value_type();
     }
     operator delete[] (m_arr);
+    m_size = 0;
+    m_capacity = 0;
   }
 public:
   /*!
@@ -293,13 +295,16 @@ public:
     if (m_capacity <= capacity) return;
     if (capacity >= max_size()) throw std::length_error("vec::reserve size > max_size");
     value_type *_arr = new value_type[capacity];
-    for (size_t i = 0; i < m_size; ++i) {
+    size_t size = m_size;
+    for (size_t i = 0; i < size; ++i) {
       _arr[i] = m_arr[i];
     }
     // Remove all after copying
-    delete[] m_arr;
-    m_arr = _arr;
-    m_capacity = capacity;
+    _destruct();
+    _range_allocate(capacity);
+    for (size_t i = 0; i < size; ++i) {
+      _node_initialize(_arr[i]);
+    }
   }
   /*!
    * @brief  Returns the size of largest size of %vec
