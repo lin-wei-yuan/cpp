@@ -50,20 +50,22 @@ private:
   }
   /*!
    * @brief Allocate memory
-   * @param elem [description]
+   * @param _n Elements in array
    */
-  void _range_allocate() {
-    size_t allocated = m_size * sizeof(value_type);
+  void _range_allocate(size_t _n) {
+    size_t allocated = _n * sizeof(value_type);
     m_arr = static_cast<value_type*>(operator new[] (allocated));
   }
-  // @TODO: refactoring
-  // use iterators
-  void _node_initialize(size_t index, const value_type& elem) {
-    #include <iostream>
-    std::cout << "_node_initialize: " << elem << std::endl;
-    new (m_arr + index) value_type(elem);
+  /*!
+   * @brief  Init element
+   */
+  void _node_initialize(const value_type& elem) {
+    new (m_arr + m_size++) value_type(elem);
+    m_capacity++;
   }
-
+  /*!
+   * @brief Free all data int @vec
+   */
   void _destruct() {
     for (size_t i = 0; i < m_size; ++i) {
       m_arr[i].~value_type();
@@ -80,21 +82,21 @@ public:
   , m_begin(__NULLPTR)
   , m_end(__NULLPTR)
   {
-    _range_allocate();
+    _range_allocate(0);
   }
   /*!
    * @brief  Creates a vector with default constructed elements.
    * @param size  The number of elements to initially create.
    */
   vec(size_t size)
-  : m_size(size)
-  , m_capacity(size)
+  : m_size(0)
+  , m_capacity(0)
   , m_begin(__NULLPTR)
   , m_end(__NULLPTR)
   {
-    _range_allocate();
-    for (size_t i = 0; i < m_size; ++i) {
-      _node_initialize(i, value_type());
+    _range_allocate(size);
+    for (size_t i = 0; i < size; ++i) {
+      _node_initialize(value_type());
     }
     _iterators();
   }
@@ -104,14 +106,14 @@ public:
    * @param element  An element to copy.
    */
   vec(size_t size, const value_type& element)
-    : m_size(size)
-    , m_capacity(size)
+    : m_size(0)
+    , m_capacity(0)
     , m_begin(__NULLPTR)
     , m_end(__NULLPTR)
   {
-    _range_allocate();
-    for (size_t i = 0; i < m_size; ++i) {
-      _node_initialize(i, element);
+    _range_allocate(size);
+    for (size_t i = 0; i < size; ++i) {
+      _node_initialize(element);
     }
     _iterators();
   }
@@ -121,14 +123,14 @@ public:
    * @param other  A vector of identical elemen
    */
   vec(const vec<value_type>& other)
-    : m_size(other.size())
-    , m_capacity(other.capacity())
+    : m_size(0)
+    , m_capacity(0)
     , m_begin(__NULLPTR)
     , m_end(__NULLPTR)
    {
-    _range_allocate();
+    _range_allocate(other.size());
     for (size_t i = 0; i < other.size(); ++i) {
-      _node_initialize(i, other.at(i));
+      _node_initialize(other.at(i));
     }
     _iterators();
   }
@@ -144,14 +146,10 @@ public:
     , m_begin(__NULLPTR)
     , m_end(__NULLPTR)
   {
-    m_size = std::distance(_begin, _end);
-    m_capacity = m_size;
-    _range_allocate();
-    // @TODO: fix
-    size_t i = 0;
+    size_t dist = std::distance(_begin, _end);
+    _range_allocate(dist);
     for (const_iterator it = _begin; it != _end; ++it) {
-      _node_initialize(i, *it);
-      i++;
+      _node_initialize(*it);
     }
     _iterators();
   }
