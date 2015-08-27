@@ -3,7 +3,6 @@
 #include <list>
 #include <set>
 #include <stdexcept>
-#include "vector.h"
 using namespace std;
 
 template<typename T>
