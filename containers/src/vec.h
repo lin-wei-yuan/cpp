@@ -159,10 +159,6 @@ public:
    * Managing the pointer is the user's responsibility.
    */
   ~vec() __NOEXCEPT {
-    #ifdef _DEBUG
-      printf("vec::~vec called \n");
-    #endif
-    // @TODO: fix
     delete[] m_arr;
   }
 
@@ -269,6 +265,16 @@ public:
     }
     m_arr[m_size++] = element;
   }
+
+#if __cplusplus >= 201103L
+  void push_back(value_type&& element) {
+    // space full
+    if (m_size == m_capacity) {
+      (m_capacity == 0) ? reserve(1) : reserve(2 * m_capacity);
+    }
+    m_arr[m_size++] = std::move(element);
+  }
+#endif
 
   /*!
    * @brief  Attempt to preallocate enough memory for specified number of elements.
