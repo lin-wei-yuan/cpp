@@ -46,6 +46,12 @@ void challenge1() {
   // T& const temp6 = 6; //cannot be applied
 }
 
+void challenge2() {
+  int i = 10;
+  cout << "i ["<< &i << "] = " << i << endl;
+}
+
 int main() {
-  challenge1();
+  // challenge1();
+  challenge2();
 }
