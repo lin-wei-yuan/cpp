@@ -11,6 +11,10 @@ public:
   void set(int _i) { i = _i;}
   int get() const { return i; }
 };
+ostream& operator<<(ostream& s, const D& obj) {
+  s << obj.get();
+  return s;
+}
 
 void challenge0() {
   int i = 10;
@@ -47,7 +51,15 @@ void challenge1() {
   delete p4;
 }
 
+void challenge2() {
+  D a[3] = {1, 2, 3};
+  D* p = a;
+  cout << *(p + 0) << endl;
+  cout << *(p + 1) << endl;
+  cout << *(p + 2) << endl;
+}
+
 int main() {
-  challenge1();
+  challenge2();
   return 0;
 }
