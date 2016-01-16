@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-#include "t.h"
+#include "./t.h"
 using namespace std;
 
 // #define _DEBUG
@@ -18,7 +18,7 @@ public:
 
 class Derived_2 : public Base{
 public:
-  void print() const override {};
+  void print() const {};
 };
 
 class D

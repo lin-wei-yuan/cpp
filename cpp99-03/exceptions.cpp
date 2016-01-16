@@ -1,9 +1,11 @@
 #include <iostream>
 #include <typeinfo>
-#include "smart.h"
-#include "t.h"
 #include <stdexcept>
 #include <memory>
+
+#include "./smart.h"
+#include "./c.h"
+
 using namespace std;
 
 class simpleException {
@@ -95,9 +97,9 @@ void challenge3() {
   auto_ptr<T> p1(new T());
   auto_ptr<T> p2 = p1;
   // Segmentation Fault
-  // cout << p1.get()->getID() << endl;
+  // cout << p1.get()->getIndex() << endl;
   // p2 owned new T(), p1 == NULL
-  cout << p2.get()->getID() << endl;
+  cout << p2.get()->getIndex() << endl;
   const auto_ptr<T> cp1(new T());
   // auto_ptr<T> cp2(cp1); // - compilation error
   // cp1.release(); // - compilation error
