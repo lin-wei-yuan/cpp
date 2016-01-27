@@ -2,6 +2,7 @@
 #include <vector>
 #include <list>
 #include <set>
+#include<forward_list>
 #include <stdexcept>
 using namespace std;
 
