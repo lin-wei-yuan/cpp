@@ -12,3 +12,7 @@ void challenge(){
   forward_list<int>listThree(10);//makes a foward list of size ten
   cout<<listThree.size();//prints the size of 10
   print(forward_list<int>(listThree));//prints 10 values of zero
+  listThree.push_front(10);//pushs interger to to front of foward_list o(1)
+  print(foward_list<int>(listThree);//o(n)
+}
+  
