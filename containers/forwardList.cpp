@@ -7,4 +7,6 @@ void challenge(){
   forward_list<int> listOne;
   
   print<forward_list<int>>(listOne);
+  // o(n)
+  
 }
