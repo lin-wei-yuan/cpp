@@ -22,9 +22,6 @@ void challenge(){
    forward_list<int> listFive;//create a new forward list
    listFive.push_front(1);//push to the front of the forward list
    listFive.clear();//clears list five
-   
-   
-   
    //operations
    listFive.merge(listFour);//merge list five with list three
    print(forward_list<int>(listFive));
