@@ -9,5 +9,11 @@ void challenge(){
   deque<int> dq2;//creates dq2
   dq2.resize(10);//resize to take 10 elements 
   print(deque<int>(dq2));//prints 10 zeros
-  
+  deque<int> dq3;
+  for(int i=0; i<10; ++i){
+      dq3.push_front(i);
+      dq3.push_back(i);
+    }
+    print(deque<int>(dq3));
+
 }
