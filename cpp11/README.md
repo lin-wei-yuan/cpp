@@ -1,1 +1,2 @@
-#Learn C++ 2011 standart
+#Learn C++ 2011 standard
+
