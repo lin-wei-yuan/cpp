@@ -20,13 +20,19 @@ void challenge(){
    listFour.pop_front();//removes 9 from the forward list
    print(forward_list<int>(listFour));
    forward_list<int> listFive;//create a new forward list
+   listFive.push_front(1);//push to the front of the forward list
+   listFive.clear();//clears list five
+   
+   
+   
+   //operations
    listFive.merge(listFour);//merge list five with list three
    print(forward_list<int>(listFive));
    forward_list<int>listSix={1,2,6,3,4};
    forward_list<int>listSeven={2,4};
    listSeven.splice_after(listSix.before_begin(),listSeven);//splice listseven
    print(forward_list<int>(listSix));//list six contains 2412634
-   print(forward_list<int>(listSeve));//list seven is now empty
+   print(forward_list<int>(listSeven));//list seven is now empty
    
 }
   
