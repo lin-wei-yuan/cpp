@@ -17,3 +17,5 @@ How to learn CPP features
 - CPP 14
 - Containers implementaion
 - Assembler research
+- Boost
+-   lexical cast
