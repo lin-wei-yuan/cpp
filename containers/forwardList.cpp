@@ -1,6 +1,4 @@
 #include "./utils.h"
-
-
 void challenge(){
   // o(1)
   forward_list<int> listOne;
@@ -17,11 +15,18 @@ void challenge(){
   for(int i=0; i<10; ++i){
         listFour.push_front(i);
     }//push 0 to 9 to front of list
+   
+   //modifers
    listFour.pop_front();//removes 9 from the forward list
    print(forward_list<int>(listFour));
    forward_list<int> listFive;//create a new forward list
    listFive.merge(listFour);//merge list five with list three
    print(forward_list<int>(listFive));
+   forward_list<int>listSix={1,2,6,3,4};
+   forward_list<int>listSeven={2,4};
+   listSeven.splice_after(listSix.before_begin(),listSeven);//splice listseven
+   print(forward_list<int>(listSix));//list six contains 2412634
+   print(forward_list<int>(listSeve));//list seven is now empty
    
 }
   
