@@ -18,5 +18,7 @@ void challenge(){
     dq3.pop_back();//pops the back
     dq3.pop_front();//pops the front;
     print(deque<int>(dq3));//prints dq3
+    auto it = dq3[0]; //it points to value 8
+    cout<<it;//prints the to value 8
 
 }
