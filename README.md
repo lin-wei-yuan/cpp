@@ -18,4 +18,4 @@ How to learn CPP features
 - Containers implementaion
 - Assembler research
 - Boost
--   lexical cast
+  -   lexical cast
