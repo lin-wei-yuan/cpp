@@ -15,5 +15,8 @@ void challenge(){
       dq3.push_back(i);
     }
     print(deque<int>(dq3));
+    dq3.pop_back();//pops the back
+    dq3.pop_front();//pops the front;
+    print(deque<int>(dq3));//prints dq3
 
 }
