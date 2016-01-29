@@ -1,1 +1,1 @@
-#Learn C++ 2014 standart
+#Learn C++ 2014 standard
