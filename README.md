@@ -19,3 +19,4 @@ How to learn CPP features
 - Assembler research
 - Boost
   -   lexical cast
+  -   Variant
