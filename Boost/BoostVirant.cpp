@@ -15,4 +15,9 @@ void challenge(){
 
 struct ShowVariant: public boost::static_visitor<>{
   ShowVariant()(int I){ cout<<I<<endl;}
+  ShowVariant()(string g){cout<<g<<endl;}
+};
+
+int main(){
+  
 }
