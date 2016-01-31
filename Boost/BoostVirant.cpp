@@ -12,3 +12,7 @@ void challenge(){
   cout<<Var<<endl;//prints 21
   cout<<boost::get<int>(Var)<<endl;//prints the variant value of the int hence 21
 }
+
+struct ShowVariant: public boost::static_visitor<>{
+  ShowVariant()(int I){ cout<<I<<endl;}
+}
