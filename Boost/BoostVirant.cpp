@@ -16,11 +16,11 @@ void challenge(){
 }
 
 struct ShowVariant: public boost::static_visitor<>{
-  void operator()(int I){ std::cout<<I<<std::endl;}
-  void operator()(std::string g){std::cout<<g<<std::endl;}
+  void operator()(int I)const{ std::cout<<I<<std::endl;}
+  void operator()(std::string g)const{std::cout<<g<<std::endl;}
 };
 int main(){
    boost::variant<int,std::string> var;
-   var = "hello world";
-   boost::apply_vistor<std::string>(showVariant{},var)
+   var = 1;
+   boost::apply_vistor(showVariant{},var)
    }
