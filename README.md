@@ -18,6 +18,6 @@ How to learn CPP features
 - Containers implementaion
 - Assembler research
 - Boost
-  -   lexical cast
-  -   Variant
-  -   Any
+  - lexical_cast
+  - variant
+  - any
