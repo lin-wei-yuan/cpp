@@ -15,9 +15,9 @@ void challenge(){
   std::cout<<boost::get<int>(Var)<<std::endl;//prints the variant value of the int hence 21
 }
 
-struct ShowVariant: public boost::static_visitor<>{
+struct showVariant: public boost::static_visitor<>{
   void operator()(int I)const{ std::cout<<I<<std::endl;}
-  void operator()(std::string g)const{std::cout<<g<<std::endl;}
+  void operator()(const &std::string g)const{std::cout<<g<<std::endl;}
 };
 int main(){
    boost::variant<int,std::string> var;
