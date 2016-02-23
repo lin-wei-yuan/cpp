@@ -25,15 +25,15 @@ How to learn C++ features
   ```
   @TODO: ...
   ```
-### [Containers methods](https://github.com/learn-langs/cpp/tree/master/containers)
-  - [deque](https://github.com/learn-langs/cpp/blob/master/containers/deque.cpp)
-  - [vector](https://github.com/learn-langs/cpp/blob/master/containers/vector.cpp)
-  - [list](https://github.com/learn-langs/cpp/blob/master/containers/list.cpp)
-  - [forward_list](https://github.com/learn-langs/cpp/blob/master/containers/forward_list.cpp)
-  - [set](https://github.com/learn-langs/cpp/blob/master/containers/set.cpp)
+### [STL](https://github.com/learn-langs/cpp/tree/master/stl)
+  - [deque](https://github.com/learn-langs/cpp/blob/master/stl/deque.cpp)
+  - [vector](https://github.com/learn-langs/cpp/blob/master/stl/vector.cpp)
+  - [list](https://github.com/learn-langs/cpp/blob/master/stl/list.cpp)
+  - [forward_list](https://github.com/learn-langs/cpp/blob/master/stl/forward_list.cpp)
+  - [set](https://github.com/learn-langs/cpp/blob/master/stl/set.cpp)
 
-### [Container implementations](https://github.com/learn-langs/cpp/tree/master/containers/implementation)
-  - [vec](https://github.com/learn-langs/cpp/blob/master/containers/implementation/src/vec.h) - vector implementaion using 'placement new' feature ([Tests and comparison with vector](https://github.com/learn-langs/cpp/blob/master/containers/implementation/tests.cpp))
+### [Container implementations](https://github.com/learn-langs/cpp/tree/master/stl/implementation)
+  - [vec](https://github.com/learn-langs/cpp/blob/master/stl/implementation/src/vec.h) - vector implementaion using 'placement new' feature ([Tests and comparison with vector](https://github.com/learn-langs/cpp/blob/master/stl/implementation/tests.cpp))
 
 ### [Assembler researching](https://github.com/learn-langs/cpp/tree/master/asm)
   - [Types](https://github.com/learn-langs/cpp/blob/master/asm/asm_types.cpp)
