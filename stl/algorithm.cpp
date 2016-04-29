@@ -142,7 +142,7 @@ void challenge2() {
 
   vector<int> result(vzz.begin(), unique(vzz.begin(), vzz.end()));
   print<decltype(result)>(result);
-  //
+  // O(N·log(N))
   sort(vzz.begin(), vzz.end());
   print<decltype(vzz)>(vzz);
 
@@ -150,13 +150,29 @@ void challenge2() {
   print<decltype(result2)>(result2);
 }
 
+// Sorting operations
 void challenge3() {
+  vector<int> v1 = sequence(SEC_TYPE::SORT);
+  vector<int> v2 = sequence(SEC_TYPE::BACKSORT);
+  // O(n)
+  cout << "Is sequence sorted : " << boolalpha << is_sorted(v1.begin(), v1.end()) << endl;
+  cout << "Is sequence sorted : " << boolalpha << is_sorted(v2.begin(), v2.end()) << endl;
+}
 
+void challenge4() {
+  vector<int> v1 = sequence(SEC_TYPE::SORT);
+  print<decltype(v1)>(v1);
+
+  auto lb = lower_bound(v1.begin(), v1.end(), 8);
+  auto ub = upper_bound(v1.begin(), v1.end(), 18);
+  cout << "Lower and upper bounds: " << *(lb) << " and " << *(ub) << ", distance: " << distance(lb, ub) << endl;
+  copy(lb, ub, ostream_iterator<int>(cout, " "));
 }
 
 int main() {
   // challenge1();
   // challenge2();
-  challenge3();
+  // challenge3();
+  challenge4();
   return 0;
 }

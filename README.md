@@ -26,11 +26,13 @@ How to learn C++ features
   @TODO: ...
   ```
 ### [STL](https://github.com/learn-langs/cpp/tree/master/stl)
-  - [deque](https://github.com/learn-langs/cpp/blob/master/stl/deque.cpp)
-  - [vector](https://github.com/learn-langs/cpp/blob/master/stl/vector.cpp)
-  - [list](https://github.com/learn-langs/cpp/blob/master/stl/list.cpp)
-  - [forward_list](https://github.com/learn-langs/cpp/blob/master/stl/forward_list.cpp)
-  - [set](https://github.com/learn-langs/cpp/blob/master/stl/set.cpp)
+  - [<deque>](https://github.com/learn-langs/cpp/blob/master/stl/deque.cpp)
+  - [<vector>](https://github.com/learn-langs/cpp/blob/master/stl/vector.cpp)
+  - [<list>](https://github.com/learn-langs/cpp/blob/master/stl/list.cpp)
+  - [<forward_list>](https://github.com/learn-langs/cpp/blob/master/stl/forward_list.cpp)
+  - [<set>](https://github.com/learn-langs/cpp/blob/master/stl/set.cpp)
+  - [<algorithm>](https://github.com/learn-langs/cpp/blob/master/stl/algorithm.cpp)
+
 
 ### [Container implementations](https://github.com/learn-langs/cpp/tree/master/stl/implementation)
   - [vec](https://github.com/learn-langs/cpp/blob/master/stl/implementation/src/vec.h) - vector implementaion using 'placement new' feature ([Tests and comparison with vector](https://github.com/learn-langs/cpp/blob/master/stl/implementation/tests.cpp))
