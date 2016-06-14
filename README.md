@@ -18,13 +18,10 @@ How to learn C++ features
     - [Typecast](https://github.com/learn-langs/cpp/blob/master/cpp99-03/typecast.cpp)
   - [Inheritance](https://github.com/learn-langs/cpp/blob/master/cpp99-03/inheritance.cpp)
 
-### [C++ 11](https://github.com/learn-langs/cpp/tree/master/cpp11)
-  - [Threads](https://github.com/learn-langs/cpp/blob/master/cpp11/threads.cpp)
+### [C++ 11](https://github.com/learn-langs/cpp/tree/master/cpp11) [wip]
 
-### [C++ 14](https://github.com/learn-langs/cpp/tree/master/cpp14)
-  ```
-  @TODO: ...
-  ```
+### [C++ 14](https://github.com/learn-langs/cpp/tree/master/cpp14) [wip]
+
 ### [STL](https://github.com/learn-langs/cpp/tree/master/stl)
   - [<deque>](https://github.com/learn-langs/cpp/blob/master/stl/deque.cpp)
   - [<vector>](https://github.com/learn-langs/cpp/blob/master/stl/vector.cpp)
