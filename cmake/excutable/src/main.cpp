@@ -1,8 +1,8 @@
-#include <iostream>
-using namespace std;
+#include "hello.h"
 
 int main(int argc, char const *argv[])
 {
-	cout << "Hello" << endl;
-	return 0;
+    hello h;
+    cout << "Hello" << endl;
+    return 0;
 }
