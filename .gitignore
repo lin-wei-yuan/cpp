@@ -3,4 +3,6 @@ containers/docs
 *.class
 *.s
 *.dump
+*.user
 build-*
+build*
