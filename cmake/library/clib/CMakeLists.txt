@@ -1,4 +1,3 @@
-cmake_minimum_required( VERSION 3.6.0 )
 project( CLib )
 include_directories( include )
 # Set all .cpp files to variable SOURCES
