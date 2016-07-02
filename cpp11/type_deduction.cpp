@@ -7,8 +7,12 @@ using namespace std;
 #include <cxxabi.h>
 #endif
 
+int value = 73;
+// Example of methods
 void f1() {}
 int f2() { return 0; }
+int& f3() { return value; }
+int&& f4() { return std::move(value); }
 
 template<typename T>
 void print()
@@ -17,10 +21,10 @@ void print()
 
 #ifndef OS_WINDOWS
     int status;
-    name = abi::__cxa_demangle(name, 0, 0, &status);
+    auto nname = abi::__cxa_demangle(name, 0, 0, &status);
 #endif
-    cout << name << endl;
-}
+    cout << nname << " -> (" << name << ")" << endl;
+} 
 
 class A
 {
@@ -58,11 +62,16 @@ void challenge1()
     print<decltype(test_obj)>();
     print<decltype(test_int)>();
     print<decltype((test_int))>();
-
+    // Deduction function types
     print<decltype(f1)>();
     print<decltype(f1())>();
     print<decltype(f2)>();
     print<decltype(f2())>();
+    // lvalue and rvalue references
+    print<decltype(f3)>();
+    print<decltype(f3())>();
+    print<decltype(f4)>();
+    print<decltype(f4())>();
 }
 
 int main(int argc, char const *argv[])
