@@ -43,35 +43,47 @@ public:
 void challenge1()
 {
     // Base types 
-    print<int>();
-    print<unsigned int>();
-    print<double>();
-    print<float>();
+    print<int>(); // int -> (i)
+    print<unsigned int>(); // unsigned int -> (j)
+    print<double>(); // double -> (d)
+    print<float>(); // float -> (f)
     // Classes
-    print<A>();
-    print<B>();
-    // Deduction types from rvalue
-    print<decltype(1)>();
-    print<decltype(1L)>();
-    print<decltype(1LL)>();
-    print<decltype(1.0)>();
-    print<decltype(1.0f)>();
+    print<A>(); // A -> (1A)
+    print<B>(); // B -> (1B)
+    // Deduction types from POD
+    print<decltype(1)>(); // int -> (i)
+    print<decltype(1L)>(); // long -> (l)
+    print<decltype(1LL)>(); // long long -> (x)
+    print<decltype(1.0)>(); // double -> (d)
+    print<decltype(1.0f)>(); // float -> (f)
     // Decuction types from variables
     A test_obj;
     int test_int = 1;
-    print<decltype(test_obj)>();
-    print<decltype(test_int)>();
-    print<decltype((test_int))>();
+    print<decltype(test_obj)>(); // A -> (1A)
+    print<decltype(test_int)>(); // int -> (i)
+    print<decltype((test_int))>(); // int -> (i)
     // Deduction function types
-    print<decltype(f1)>();
-    print<decltype(f1())>();
-    print<decltype(f2)>();
-    print<decltype(f2())>();
-    // lvalue and rvalue references
-    print<decltype(f3)>();
-    print<decltype(f3())>();
-    print<decltype(f4)>();
-    print<decltype(f4())>();
+    print<decltype(f1)>(); // void () -> (FvvE)
+    print<decltype(f1())>(); // void -> (v)
+    print<decltype(f2)>(); // int () -> (FivE)
+    print<decltype(f2())>(); // int -> (i)
+    // Lvalue and rvalue references
+    print<decltype(f3)>(); // int& () -> (FRivE)
+    print<decltype(f3())>(); // int -> (i)
+    print<decltype(f4)>(); // int&& () -> (FOivE)
+    print<decltype(f4())>(); // int -> (i)
+    // Pointers
+    int aa = 2;
+    int* p = &aa;
+    int* np = p;
+    int** npp = &np;
+    int*** nppp = &npp;
+    print<decltype(p)>(); // int* -> (Pi)
+    print<decltype(np)>(); // int* -> (Pi)
+    print<decltype(npp)>(); // int** -> (PPi)
+    print<decltype(nppp)>(); // int*** -> (PPPi)
+    // Templates
+    print<decltype(print<int>)>();
 }
 
 int main(int argc, char const *argv[])
