@@ -1,11 +1,10 @@
 #include <iostream>
 #include <typeinfo>
-using namespace std;
+#include "basic_utils.h"
 
-// Use platform-specific lib
-#ifndef OS_WINDOWS
-#include <cxxabi.h>
-#endif
+using namespace std;
+using basic_utils::typeof;
+using basic_utils::Test;
 
 int value = 73;
 // Example of methods
@@ -17,28 +16,8 @@ int&& f4() { return std::move(value); }
 template<typename T>
 void print()
 {
-    auto name = typeid(T).name();
-
-#ifndef OS_WINDOWS
-    int status;
-    auto nname = abi::__cxa_demangle(name, 0, 0, &status);
-#endif
-    cout << nname << " -> (" << name << ")" << endl;
-} 
-
-class A
-{
-public:
-    A() {}
-    ~A() {}
-};
-
-class B : public A
-{
-public:
-    B() {}
-    ~B() {}
-};
+    cout << typeof<T>() << endl;
+}
 
 void challenge1()
 {
@@ -48,8 +27,7 @@ void challenge1()
     print<double>(); // double -> (d)
     print<float>(); // float -> (f)
     // Classes
-    print<A>(); // A -> (1A)
-    print<B>(); // B -> (1B)
+    print<Test>(); // Test -> (1Test)
     // Deduction types from POD
     print<decltype(1)>(); // int -> (i)
     print<decltype(1L)>(); // long -> (l)
@@ -57,9 +35,9 @@ void challenge1()
     print<decltype(1.0)>(); // double -> (d)
     print<decltype(1.0f)>(); // float -> (f)
     // Decuction types from variables
-    A test_obj;
+    Test test_obj;
     int test_int = 1;
-    print<decltype(test_obj)>(); // A -> (1A)
+    print<decltype(test_obj)>(); // Test -> (1Test)
     print<decltype(test_int)>(); // int -> (i)
     print<decltype((test_int))>(); // int -> (i)
     // Deduction function types
