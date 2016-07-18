@@ -1,6 +1,7 @@
 // Socket
 #include <sys/types.h>
 #include <sys/socket.h>
+#include <arpa/inet.h>
 // Memset
 #include <string.h>
 
@@ -21,7 +22,18 @@ struct CPacket
 class CSocket
 {
 public:
-    CSocket() {}
+    CSocket()
+    {
+        if( Initialize() )
+        {
+            throw std::logic_error( "Failed creating socket" );
+        }
+
+        if( BindSocket() )
+        {
+            throw std::logic_error( "Failed binding socket" );
+        }
+    }
     ~CSocket() {}
 private:
     int m_socket;
@@ -50,6 +62,7 @@ private:
         return bind_result != -1;
     }
 
+public:
     CPacket ReceiveData()
     {
         char buffer[BUFFER_LEN];
@@ -69,5 +82,19 @@ private:
 
 int main(int argc, char const *argv[])
 {
+    try
+    {
+        CSocket s;
+        while( true )
+        {
+            auto packet = s.ReceiveData();
+            std::cout << "Incoming data: " << packet.data << std::endl;
+        }
+    }
+    catch( const std::exception& ex )
+    {
+        std::cout << "Exception: " << ex.what() << std::endl;
+    }
     return 0;
+}
 }
