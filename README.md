@@ -19,16 +19,21 @@ How to learn C++ features
   - [Inheritance](https://github.com/learn-langs/cpp/blob/master/cpp99-03/inheritance.cpp)
 
 ### [C++ 11](https://github.com/learn-langs/cpp/tree/master/cpp11) [wip]
+  - [Move semantic](https://github.com/learn-langs/cpp/tree/master/cpp11/move.cpp)
+  - [Type deduction](https://github.com/learn-langs/cpp/tree/master/cpp11/type_deduction.cpp)
 
 ### [C++ 14](https://github.com/learn-langs/cpp/tree/master/cpp14) [wip]
+```
+@TODO: ...
+```
 
 ### [STL](https://github.com/learn-langs/cpp/tree/master/stl)
-  - [<deque>](https://github.com/learn-langs/cpp/blob/master/stl/deque.cpp)
-  - [<vector>](https://github.com/learn-langs/cpp/blob/master/stl/vector.cpp)
-  - [<list>](https://github.com/learn-langs/cpp/blob/master/stl/list.cpp)
-  - [<forward_list>](https://github.com/learn-langs/cpp/blob/master/stl/forward_list.cpp)
-  - [<set>](https://github.com/learn-langs/cpp/blob/master/stl/set.cpp)
-  - [<algorithm>](https://github.com/learn-langs/cpp/blob/master/stl/algorithm.cpp)
+  - [deque](https://github.com/learn-langs/cpp/blob/master/stl/deque.cpp) - Learn <deque> methods
+  - [vector](https://github.com/learn-langs/cpp/blob/master/stl/vector.cpp) - Learn <vector> methods
+  - [list](https://github.com/learn-langs/cpp/blob/master/stl/list.cpp) - Learn <list> methods
+  - [set](https://github.com/learn-langs/cpp/blob/master/stl/set.cpp) - Learn <set> methods
+  - [algorithm](https://github.com/learn-langs/cpp/blob/master/stl/algorithm.cpp) - Learn <algorithm> methods
+  - [lock free](https://github.com/learn-langs/cpp/blob/master/stl/lock_free.cpp) - Compare lock-free and classic stack implementation
 
 
 ### [Container implementations](https://github.com/learn-langs/cpp/tree/master/stl/implementation)
@@ -39,14 +44,11 @@ How to learn C++ features
   - [Referrences](https://github.com/learn-langs/cpp/blob/master/asm/asm_referrences.cpp)
   - [Functions](https://github.com/learn-langs/cpp/blob/master/asm/asm_func.cpp)
 
-### [Boost](https://github.com/learn-langs/cpp/tree/master/boost)
-  - [lexical_cast](https://github.com/learn-langs/cpp/blob/master/boost/lexical_cast.cpp)
-  - [variant](https://github.com/learn-langs/cpp/blob/master/boost/variant.cpp)
-  - any
+### [Concurrency (wip)](https://github.com/learn-langs/cpp/tree/master/concurrency)
+```
+@TODO: ...
+```
 
-### [Boost](https://github.com/learn-langs/cpp/tree/master/boost)
-  - [lexical_cast](https://github.com/learn-langs/cpp/blob/master/boost/lexical_cast.cpp)
-  - [variant](https://github.com/learn-langs/cpp/blob/master/boost/variant.cpp)
-  - any
-
-### [Concurrency](https://github.com/learn-langs/cpp/tree/master/concurrency)
+### [Cmake](https://github.com/learn-langs/cpp/tree/master/cmake)
+  - Compile and build [executable](https://github.com/learn-langs/cpp/blob/master/cmake/executable)
+  - Compile and build [library](https://github.com/learn-langs/cpp/blob/master/cmake/executable)
