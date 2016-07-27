@@ -50,5 +50,5 @@ How to learn C++ features
 ```
 
 ### [Cmake](https://github.com/learn-langs/cpp/tree/master/cmake)
-  - Compile and build [executable](https://github.com/learn-langs/cpp/blob/master/cmake/executable)
-  - Compile and build [library](https://github.com/learn-langs/cpp/blob/master/cmake/executable)
+  - Compile and build [executable](https://github.com/learn-langs/cpp/tree/master/cmake/excutable)
+  - Compile and build [library](https://github.com/learn-langs/cpp/tree/master/cmake/library)
