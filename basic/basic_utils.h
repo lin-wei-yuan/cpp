@@ -117,6 +117,25 @@ public:
 
 };
 
+#include <ctime>
+// Capture time
+class CaptureTime
+{
+public:
+    void Start()
+    {
+        m_start_time = clock();
+    }
+
+    clock_t Stop()
+    {
+        return clock() - m_start_time;
+    }
+private:
+
+    clock_t m_start_time;
+};
+
 
 } // End of basic_utils name
 
