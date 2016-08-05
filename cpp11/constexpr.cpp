@@ -62,25 +62,25 @@ void challenge2()
 {
     constexpr long long variable = 20;
 
-    CaptureTime ex;
+    CaptureTime<> ex;
     ex.Start();
     // @TODO: Replace on BigNumber for preventing overflow
-    long long result_runtime = 0; //factorial_1( variable );
-    clock_t execution_time =  ex.Stop();
+    long long result_runtime = factorial_1( variable );
+    auto execution_time =  ex.Stop();
 
     cout << "[Runtime] Factorial of " << variable << " is " << result_runtime 
-         << " [ time is " << execution_time << " ms ]" << endl;
+         << " [ time is " << execution_time << " ns ]" << endl;
 
     ex.Start();
     // @TODO: Replace on BigNumber for preventing overflow
-    SCompileTime<factorial_2( variable )> ct;
-    long long result_compile = ct.Result();
+    // SCompileTime<factorial_2( variable )> ct;
+    const long long result_compile = factorial_2( variable ); 
+    // long long result_compile = ct.Result();
     execution_time =  ex.Stop();
 
     cout << "[Compile] Factorial of " << variable << " is " << result_compile 
-         << " [ time is " << execution_time << " ms ]" << endl;
+         << " [ time is " << execution_time << " ns ]" << endl;
 }
-
 
 int main()
 {

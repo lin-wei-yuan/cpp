@@ -7,6 +7,10 @@
 #include <cxxabi.h>
 #endif
 
+#include <ctime>
+#include <chrono>
+#include <ratio>
+
 namespace basic_utils
 {
 
@@ -117,23 +121,27 @@ public:
 
 };
 
-#include <ctime>
+
 // Capture time
+template<typename TType = std::chrono::nanoseconds>
 class CaptureTime
 {
 public:
+    typedef std::chrono::high_resolution_clock::time_point hr_clock_t;
+
     void Start()
     {
-        m_start_time = clock();
+        m_start_time = std::chrono::high_resolution_clock::now();
     }
 
-    clock_t Stop()
+    long long Stop()
     {
-        return clock() - m_start_time;
+        auto time = std::chrono::high_resolution_clock::now() - m_start_time;
+        return std::chrono::duration_cast<TType>(time).count();
     }
 private:
 
-    clock_t m_start_time;
+    hr_clock_t m_start_time;
 };
 
 
