@@ -29,7 +29,8 @@
 ---------------------
 */
 
-void simple() {
+void simple()
+{
     int a = 10;
     int b = 11;
     int c = 12;
@@ -53,7 +54,8 @@ void simple() {
   .cfi_def_cfa 7, 8
 **/
 
-void simple1() {
+void simple1()
+{
     int a = 10;
     int b = 11;
     int c = 12;
@@ -64,6 +66,7 @@ void simple1() {
 
 // So, & == T* const
 
-int main() {
-  return 0;
+int main()
+{
+    return 0;
 }

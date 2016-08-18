@@ -56,11 +56,12 @@ main:
   .section  .note.GNU-stack,"",@progbits
  */
 
-int main() {
-  short i_1 = 1; // 2 bytes
-  int i = 2; // 4 bytes
-  long i_2 = 3; // 8 bytes
-  double i_3 = 4.1; // 8 bytes
-  char i_4 = 'a';
-  return 0;
+int main()
+{
+    short i_1 = 1; // 2 bytes
+    int i = 2; // 4 bytes
+    long i_2 = 3; // 8 bytes
+    double i_3 = 4.1; // 8 bytes
+    char i_4 = 'a';
+    return 0;
 }
