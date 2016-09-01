@@ -62,15 +62,15 @@ public:
     }
 
     Test( const Test& that )
-        : m_id( that.getID() )
+        : m_id( that.getID() + 1 )
     {
-        std::cout<< "Copy Test::ctor called. Source = " << that.getID() << std::endl;
+        std::cout<< "Copy Test::ctor called. Source = " << m_id << std::endl;
     }
 
     Test( Test&& that )
         : m_id( that.getID() )
     {
-        std::cout << "Move Test::ctor called. Source = " << that.getID() << std::endl;
+        std::cout << "Move Test::ctor called. Source = " << m_id << std::endl;
     }
 
     // Destructor
@@ -99,6 +99,11 @@ public:
         std::cout << "Move Test::operator called. Source = " << that.getID() << std::endl;
         m_id = that.getID();
         return *this;
+    }
+
+    void operator() () const
+    {
+        std::cout << "Call operator()" << std::endl;
     }
 
     // Getters / Setters
