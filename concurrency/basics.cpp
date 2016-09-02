@@ -1,5 +1,6 @@
 #include <iostream>
 #include <thread>
+#include <chrono>
 #include "../basic/basic_utils.h"
 
 using basic_utils::typeof;
@@ -61,27 +62,66 @@ void challenge2()
 }
 
 // Thread object params
-class A : public Test
+struct Holder
+{
+    int var;
+    Holder( int var_ )
+        :var(var_)
+    {
+        std::cout << "Holder::ctor" << std::endl;
+    }
+
+    Holder()
+    : Holder(0)
+    {}
+
+    ~Holder() { std::cout << "~Holder::dtor is " << var << std::endl; }
+};
+
+class A
 {
 public:
     A() { std::cout << "A::ctor" << std::endl; }
-    ~A() { std::cout << "~A::ctor" << std::endl; }
+    ~A() { std::cout << "~A::dtor" << std::endl; }
+
+    void thread_method( Holder val, Holder& ref, std::unique_ptr<Holder>&& ptr )
+    {
+        std::cout << "[thread] val is " << val.var
+                  << ", ref is " << ref.var << std::endl;
+        std::cout << "[thread] Wait for 5 sec...";
+        std::this_thread::sleep_for( std::chrono::seconds(5) );
+        std::cout << " Exit!" << std::endl;
+        ref.var++;
+        (*ptr).var++;
+    }
 };
 
-void thread_method1( int test, int& test1 )
-{}
-
 void challenge3()
-{}
+{
+    A a;
+    Holder val(5);
+    Holder ref(10);
+    Holder* ptr = new Holder(20);
+    std::unique_ptr<Holder> p{ ptr };
+
+    {
+        std::thread t { &A::thread_method, &a, val, std::ref(ref), std::move(p) };
+        thread_guard g{ t };
+    }
+
+    std::cout << "By ref variable is " << ref.var << std::endl;
+    std::cout << "Moved pointer variable is " << ptr->var << std::endl;
+}
 
 int main(int argc, char const *argv[])
 {
     // challenge1();
-    try
-    {
-        challenge2();
-    }
-    catch( ... ) {}
+    // try
+    // {
+    //     challenge2();
+    // }
+    // catch( ... ) {}
+    challenge3();
 
     return 0;
 }
