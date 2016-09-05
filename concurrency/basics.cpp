@@ -1,6 +1,9 @@
 #include <iostream>
 #include <thread>
 #include <chrono>
+#include <vector>
+#include <mutex>
+#include <algorithm>
 #include "../basic/basic_utils.h"
 
 using basic_utils::typeof;
@@ -113,6 +116,33 @@ void challenge3()
     std::cout << "Moved pointer variable is " << ptr->var << std::endl;
 }
 
+// Syncronization primitives
+std::mutex sync_mutex;
+
+class scoped_guard
+{
+public:
+    scoped_guard() { std::cout << "Thread #" << std::this_thread::get_id() << " started." << std::endl; }
+    ~scoped_guard() { std::cout << "Thread #" << std::this_thread::get_id() << " finished." << std::endl; }
+    
+};
+
+void thread_method()
+{
+    std::lock_guard<std::mutex> lg( sync_mutex );
+    scoped_guard sg;
+}
+
+void challenge4()
+{
+    std::vector<std::thread> v( 10 );
+    for (size_t index = 0; index < v.size(); ++index)
+    {
+        v.at( index ) = std::move( std::thread( thread_method ) );
+    }
+    std::for_each( v.begin(), v.end(), std::mem_fn( &std::thread::join ) );
+}
+
 int main(int argc, char const *argv[])
 {
     // challenge1();
@@ -121,7 +151,8 @@ int main(int argc, char const *argv[])
     //     challenge2();
     // }
     // catch( ... ) {}
-    challenge3();
+    // challenge3();
+    challenge4();
 
     return 0;
 }

@@ -126,13 +126,13 @@ public:
 
 };
 
+typedef std::chrono::high_resolution_clock::time_point hr_clock_t;
 
 // Capture time
 template<typename TType = std::chrono::nanoseconds>
 class CaptureTime
 {
 public:
-    typedef std::chrono::high_resolution_clock::time_point hr_clock_t;
 
     void Start()
     {
