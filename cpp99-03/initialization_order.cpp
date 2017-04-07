@@ -41,7 +41,7 @@ public:
 // First, left-to-right, classes with virtual inheritance
 class Test : public A, virtual public B, public C
 {
-    // Declaration order 
+    // Declaration order
     E m_e;
     D m_d;
 public:
@@ -50,14 +50,14 @@ public:
 };
 
 
-int main(int argc, char const *argv[])
+int main()
 {
     /**
         B::ctor -> Virtual inheritance
         A::ctor -\
         C::ctor - | - non-virtual inheritance from left to right
         E::ctor -\
-        D::ctor - | - fields ib Test from top to bottom 
+        D::ctor - | - fields ib Test from top to bottom
         Test::ctor - ctor of Test class
     */
     Test t;

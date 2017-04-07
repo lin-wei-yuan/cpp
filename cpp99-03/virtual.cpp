@@ -1,84 +1,159 @@
 #include <iostream>
 #include <vector>
-#include "./t.h"
 using namespace std;
 
-// #define _DEBUG
-
-class Base {
+class A
+{
 public:
-  virtual void print() const = 0;
-  virtual ~Base() {}
+    A()
+    {
+        cout << "A::A" << endl;
+    }
+    virtual void foo()
+    {
+        cout << "A::foo" << endl;
+    }
+    virtual void baz()
+    {
+        cout << "A::baz" << endl;
+    }
+    void bar()
+    {
+        cout << "A::bar" << endl;
+    }
+    virtual ~A()
+    {
+        cout << "A::~A" << endl;
+    }
 };
 
-class Derived_1 : public Base {
+class B : public A
+{
 public:
-  void print_2();
+    B()
+    {
+        cout << "B::B" << endl;
+    }
+    void foo()
+    {
+        cout << "B::foo" << endl;
+    }
+    void baz()
+    {
+        cout << "B::baz" << endl;
+    }
+    void bar()
+    {
+        cout << "B::bar" << endl;
+    }
+    virtual ~B()
+    {
+        cout << "B::~B" << endl;
+    }
 };
 
-class Derived_2 : public Base{
+class Base
+{
 public:
-  void print() const {};
+    virtual void print() const = 0;
+    virtual ~Base() {}
 };
 
+class Derived_1 : public Base
+{
+public:
+    void print_2();
+};
+
+class Derived_2 : public Base
+{
+public:
+    void print() const {};
+};
+
+template<typename T>
 class D
 {
-  T first;
-  T second;
+    T first;
+    T second;
 public:
-  D() : first(T(1)), second(T(2)) {
-    #ifdef _DEBUG
-      cout << "D::D()" << endl;
-    #endif
-  }
-  virtual ~D() {
-    #ifdef _DEBUG
-      cout << "D::~D()" << endl;
-    #endif
-  }
-  virtual void print() const { cout << "D::print() const" << endl; }
-  void print_2() const { cout << "D::print_2() const" << endl; }
+    D()
+    : first(), second()
+    {
+        cout << "D::D()" << endl;
+    }
+    virtual ~D()
+    {
+        cout << "D::~D()" << endl;
+    }
+    virtual void print() const
+    {
+        cout << "D::print() const" << endl;
+    }
+    void print_2() const
+    {
+        cout << "D::print_2() const" << endl;
+    }
 };
 
-
-class E : public D
+template<typename T>
+class E : public D<T>
 {
-  T third;
-  T fourth;
+    T third;
+    T fourth;
 public:
-  E(): third(T(3)), fourth(T(4)) {
-    #ifdef _DEBUG
-      cout << "E::E()" << endl;
-    #endif
-  }
-  virtual ~E() {
-    #ifdef _DEBUG
-      cout << "E::~E()" << endl;
-    #endif
-  }
-  virtual void print() const { cout << "E::print() const" << endl; }
-  void print_2() const { cout << "E::print_2() const" << endl; }
+    E(): third(), fourth()
+    {
+        cout << "E::E()" << endl;
+    }
+    virtual ~E()
+    {
+        cout << "E::~E()" << endl;
+    }
+    virtual void print() const
+    {
+        cout << "E::print() const" << endl;
+    }
+    void print_2() const
+    {
+        cout << "E::print_2() const" << endl;
+    }
 };
 
-void challenge1() {
-  std::vector<D*> v;
-  v.push_back(new D);
-  v.push_back(new E);
+void challenge1()
+{
+    std::vector<D<A>*> v;
+    v.push_back(new D<A>);
+    v.push_back(new E<A>);
 
-  for (size_t i = 0; i < v.size(); ++i) {
-    v.at(i)->print();
-    v.at(i)->print_2();
-    delete v.at(i);
-  }
+    for (size_t i = 0; i < v.size(); ++i)
+    {
+        v.at(i)->print();
+        v.at(i)->print_2();
+        delete v.at(i);
+    }
 }
 
-void challenge2() {
+void challenge2()
+{
     // Base* test = new Derived_1; // abstract
-  Base* test = new Derived_2;
-  delete test;
+    Base* test = new Derived_2;
+    delete test;
 }
 
-int main() {
-  // challenge1();
-  challenge2();
+void challenge3()
+{
+    A* obj = new B;
+    obj->foo();
+    obj->baz();
+    obj->bar();
+    delete obj;
+}
+
+int main()
+{
+    // challenge1();
+    // challenge2();
+    challenge3();
+    return 0;
 }

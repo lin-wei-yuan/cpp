@@ -18,7 +18,7 @@ namespace basic_utils
     Returns string representation of type
 */
 template<class T>
-std::string typeof()
+std::string typeof_name()
 {
     auto name = typeid( T ).name();
     #ifndef OS_WINDOWS
@@ -26,7 +26,7 @@ std::string typeof()
         auto nname = abi::__cxa_demangle(name, 0, 0, &status);
     #endif
     return std::string( nname );
-}
+};
 
 /**
     Abstract interace for disable copying
