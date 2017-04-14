@@ -1,6 +1,10 @@
 #include <iostream>
 #include <stdexcept>
 
+class Base
+{};
+
+template<typename T>
 class A
 {
     T obj;
@@ -10,13 +14,13 @@ public:
         std::cout << "Default A::ctor" << std::endl;
     }
 
-    A( const A& _obj )
+    A(const A& _obj)
     {
         throw std::logic_error("From copy A::ctor");
     }
 
     A(T&& _obj)
-        : obj( std::move( _obj ) )
+    : obj(std::move(_obj))
     {
         throw std::logic_error("From move A::ctor");
     }
@@ -27,33 +31,35 @@ public:
     }
 };
 
+template<typename T>
 class B
 {
     T obj;
 public:
-    B( T&& _obj )
-        : obj( std::move( _obj ) )
+    B(T&& _obj)
+    : obj(std::move(_obj))
     {
         std::cout << "B::ctor called" << std::endl;
     }
-    
+
     ~B()
     {
-        throw std::logic_error( "From B:dtor" );
         std::cout << "~B():dtor called" << std::endl;
+        throw std::logic_error("From B:dtor");
     }
 };
 
+template<typename T>
 class C
 {
-    A obj;
+    T obj;
 public:
     C() try
-        : obj( std::move( A() ) )
+    : obj(std::move(T()))
     {
         std::cout << "C::ctor called " << std::endl;
     }
-    catch( const std::logic_error& le )
+    catch(const std::logic_error& le)
     {
         std::cout << "C::C() cathed: " << le.what() << std::endl;
     }
@@ -61,8 +67,8 @@ public:
 
 int main(int argc, char const *argv[])
 {
-    A a;
-    B b;
-    C c;
+    A<Base> a;
+    B<Base> b(Base());
+    C<A<Base>> c;
     return 0;
 }

@@ -1,8 +1,15 @@
 #include <iostream>
 #include <memory>
-#include "../basic/basic_utils.h"
 
-using basic_utils::Test;
+class Test
+{
+public:
+    Test() {}
+    Test(int i_) : m_i(i_) {}
+    int getID() const { return 1; }
+private:
+    int m_i;
+};
 
 // std::unique_ptr
 void challenge1()
@@ -19,7 +26,7 @@ void challenge1()
 
     Test* t1 = new Test(1);
     std::unique_ptr<Test> u3{ t1 };
-    // We dont have memory leak, 
+    // We dont have memory leak,
     // Now ``u3``s deleter is will be called
     u3.reset();
     std::cout << " End of challenge1. Now all dtors will be called" << std::endl;
@@ -37,7 +44,7 @@ void challenge2()
     // s2 has 0 references
     std::shared_ptr<Test> s3{ std::move(s2) };
     std::cout << "Use count in s3: " << s3.use_count() << std::endl;
-    if( !s2 )
+    if(!s2)
     {
         std::cout << "s2 has 0 references" << std::endl;
     }
@@ -75,8 +82,8 @@ void challenge3()
 
 int main(int argc, char const *argv[])
 {
-    // challenge1();
-    // challenge2();
+    challenge1();
+    challenge2();
     challenge3();
     return 0;
 }

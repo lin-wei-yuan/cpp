@@ -1,45 +1,43 @@
 #include <iostream>
 #include <complex>
-#include "../basic/basic_utils.h"
 using namespace std;
-using basic_utils::typeof;
 
 typedef unsigned long long int ull32_t;
 
 template<typename T>
-void print( const std::complex<T>& c )
+void print(const std::complex<T>& c)
 {
     cout << "[" << c.real() << ", " << c.imag() << "i]" << endl;
 }
 
 // Use _i literal for because literals without _ reserved by C++ STL
-constexpr std::complex<long double > operator "" _i( long double x )
+constexpr std::complex<long double> operator "" _i(long double x)
 {
     return { 0, x };
 }
 
-constexpr std::complex<ull32_t> operator "" _i( ull32_t x )
+constexpr std::complex<ull32_t> operator "" _i(ull32_t x)
 {
     return { 0, x };
 }
 
 // Work with dynamical memory
-/*constexpr*/ std::string operator "" _ex( const char* str )
+/*constexpr*/ std::string operator "" _ex(const char* str)
 {
-    return std::move( std::string( str ) );
+    return std::move(std::string(str));
 }
 
-/*constexpr*/ std::string operator "" _s( const char* str, size_t n)
+/*constexpr*/ std::string operator "" _s(const char* str, size_t n)
 {
-    return std::move( std::string( str, n ) );
+    return std::move(std::string(str, n));
 }
 
 void challenge1()
 {
     std::complex<ull32_t> test1 = 11_i;
-    print( test1 );
+    print(test1);
     std::complex<long double> test2 = 2.0l + 2.0_i;
-    print( test2 );
+    print(test2);
 
     std::string test3 = 123_ex;
     std::string test4 = "123"_s;
