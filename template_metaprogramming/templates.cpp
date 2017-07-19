@@ -6,9 +6,9 @@
 #include <tuple>
 #include <functional>
 
-#include "../basic/basic_utils.h"
+#include "../utils/basic_utils.h"
 using namespace std;
-using basic_utils::typeof;
+using basic_utils::typeof_name;
 
 // Question: Do we use this in function body ?
 template<typename T>
@@ -56,7 +56,7 @@ void challenge1()
 void challenge2()
 {
     std::tuple<int, int, double> t1( 1, 2, 3.0 );
-    cout << "Type is " << typeof<decltype(t1)>() << endl;
+    cout << "Type is " << typeof_name<decltype(t1)>() << endl;
     size_t size = tuple_size<decltype(t1)>::value;
     cout << "Elements count is " << size << endl;
     // @TODO: find some way for output this values in cycle
@@ -66,7 +66,7 @@ void challenge2()
     cout << "Index 2 is " << get<2>(t1) << endl;
 
     auto t2 = make_tuple( "string", 2, 2LL );
-    cout << "Type of t2 is " << typeof<decltype(t2)>() << endl;
+    cout << "Type of t2 is " << typeof_name<decltype(t2)>() << endl;
 }
 
 // std::bind and std::function

@@ -6,3 +6,6 @@ containers/docs
 *.user
 build-*
 build*
+*.pro
+*.pro.user
+
