@@ -2,7 +2,7 @@
 
 How to learn C++ features
 
-##Content
+## Content
 
 ### [C++ 99-03](https://github.com/learn-langs/cpp/blob/master/cpp99-03)
   - Pointers
