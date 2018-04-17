@@ -15,8 +15,7 @@
 #include <string>
 #include <cstdlib>
 
-namespace utils
-{
+namespace utils {
 
 #define UNUSED(x) (void)(x)
 
@@ -28,31 +27,36 @@ std::string type_name()
 {
     typedef typename std::remove_reference<T>::type TR;
     std::unique_ptr<char, void(*)(void*)> own
-           (
+    (
 #ifndef _MSC_VER
-                abi::__cxa_demangle(typeid(TR).name(), nullptr,
-                                           nullptr, nullptr),
+        abi::__cxa_demangle(typeid(TR).name(), nullptr,
+                            nullptr, nullptr),
 #else
-                nullptr,
+        nullptr,
 #endif
-                std::free
-           );
+        std::free
+    );
     std::string r = own != nullptr ? own.get() : typeid(TR).name();
+
     if (std::is_const<TR>::value)
         r += " const";
+
     if (std::is_volatile<TR>::value)
         r += " volatile";
+
     if (std::is_lvalue_reference<T>::value)
         r += "&";
+
     else if (std::is_rvalue_reference<T>::value)
         r += "&&";
+
     return r;
 }
 
 // Capture time
 typedef std::chrono::high_resolution_clock::time_point hr_clock_t;
 
-template<typename TType = std::chrono::nanoseconds>
+template<typename TType>
 class CaptureTime
 {
 public:
@@ -62,9 +66,15 @@ public:
         m_start_time = std::chrono::high_resolution_clock::now();
     }
 
-    long long Stop()
+    int TimePoint(bool reset_start_point = false)
     {
         auto time = std::chrono::high_resolution_clock::now() - m_start_time;
+
+        if (reset_start_point)
+        {
+            Start();
+        }
+
         return std::chrono::duration_cast<TType>(time).count();
     }
 private:
