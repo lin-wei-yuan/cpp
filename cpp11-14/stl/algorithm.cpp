@@ -22,9 +22,7 @@ std::vector<int> sequence(SEC_TYPE type)
     {
     case SEC_TYPE::RANDOM :
         for (int i = 0; i < m_sequenceSize; ++i)
-        {
             result.at(i) = rand() % m_sequenceSize + 1;
-        }
 
         break;
 
@@ -64,7 +62,7 @@ void challenge1()
         return e > 0;
     }) << endl;
     // O(n) => n == last - first
-    for_each(seq.begin(), seq.end(), []( int& e)
+    for_each(seq.begin(), seq.end(), []( int &e)
     {
         e *= 2;
     });

@@ -9,30 +9,22 @@ void challenge()
     std::list<int> l2;
 
     for (int i = 0; i < 10; ++i)
-    {
         l2.push_back(i);
-    }
 
     print<std::list<int> >(l2);
 
     for (int i = 0; i < 10; ++i)
-    {
         l2.push_front(i);
-    }
 
     print<std::list<int> >(l2);
 
     for (int i = 0; i < 10; ++i)
-    {
         l2.pop_front();
-    }
 
     print<std::list<int> >(l2);
 
     for (int i = 0; i < 10; ++i)
-    {
         l2.pop_back();
-    }
 
     print<std::list<int> >(l2);
     std::list<int> l3 (numbers, numbers + 5);

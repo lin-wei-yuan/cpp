@@ -44,7 +44,7 @@ void challenge()
         std::cout << v8.at(v8.size()) << std::endl;
     }
 
-    catch (const std::out_of_range& e)
+    catch (const std::out_of_range &e)
     {
         std::cout << e.what() << std::endl;
     }
@@ -57,23 +57,17 @@ void challenge()
 
     // Iterators
     for (std::vector<int>::iterator it =  v8.begin(); it != v8.end(); ++it)
-    {
         std::cout << *it << " ";
-    }
 
     std::cout << std::endl;
 
     for (std::vector<int>::const_iterator it =  v8.begin(); it != v8.end(); ++it)
-    {
         std::cout << *it << " ";
-    }
 
     std::cout << std::endl;
 
     for (std::vector<int>::reverse_iterator it =  v8.rbegin(); it != v8.rend(); ++it)
-    {
         std::cout << *it << " ";
-    }
 
     std::cout << std::endl;
     std::cout << v8.capacity() << ", " << v8.size() << std::endl;

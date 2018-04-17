@@ -15,12 +15,12 @@ public:
         std::cout << "A::A()" << std::endl;
         set();
     }
-    A(A&& that)
+    A(A &&that)
     {
         std::cout << "Move A::A()" << std::endl;
         set();
     }
-    A(const A& that)
+    A(const A &that)
     {
         std::cout << "Copy A::A()" << std::endl;
         set();
@@ -31,12 +31,12 @@ public:
         set();
     }
 
-    A& operator=(const A& that)
+    A &operator=(const A &that)
     {
         std::cout << "Copy A::operator=" << std::endl;
         return *this;
     }
-    A& operator=(A&& that)
+    A &operator=(A &&that)
     {
         std::cout << "Copy A::operator=" << std::endl;
         return *this;
@@ -54,14 +54,14 @@ private:
     int m_i;
 };
 
-std::ostream& operator<<(std::ostream& oin, const A& obj)
+std::ostream &operator<<(std::ostream &oin, const A &obj)
 {
     oin << obj.i();
     return oin;
 }
 
 template<typename T>
-void print(const T& container)
+void print(const T &container)
 {
     std::cout << std::endl;
     std::cout << "Typename " << typeid(container).name() << std::endl;
@@ -78,36 +78,28 @@ void print(const T& container)
     std::cout << "By index : ";
 
     for (size_t i = 0; i < container.size(); ++i)
-    {
         std::cout << container[i] << " ";
-    }
 
     std::cout << std::endl << "Iterator : ";
 
     for (typename T::const_iterator it = container.begin(); it != container.end(); ++it)
-    {
         std::cout << *it << " ";
-    }
 
     std::cout << std::endl;
 }
 
 template<typename T, typename X>
-void unit(const T& c1, const X& c2)
+void unit(const T &c1, const X &c2)
 {
     static int test_id = 1;
     assert(c1.size() == c2.size());
     assert(c1.capacity() == c2.capacity());
 
     if (c1.size() > 0)
-    {
         assert(*(c1.begin()) == *(c2.begin()));
-    }
 
     for (size_t i = 0; i < c1.size(); ++i)
-    {
         assert(c1.at(i) == c2.at(i));
-    }
 
     std::cout << "=---------------------------=" << std::endl;
     std::cout << "#" << test_id << " Passed!" << std::endl;

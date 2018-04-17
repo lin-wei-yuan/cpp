@@ -3,7 +3,7 @@
 template<typename T>
 struct greater_than
 {
-    bool operator() (const T& l, const T& r) const
+    bool operator() (const T &l, const T &r) const
     {
         return l > r;
     }
@@ -21,14 +21,9 @@ void challenge()
     std::set<int>::iterator search = s1.find(3);
 
     if (search != s1.end())
-    {
         std::cout << (*search) << std::endl;
-    }
-
     else
-    {
         std::cout << "not found!" << std::endl;
-    }
 
     // insert overloads
     std::pair<std::set<int>::iterator, bool> result = s1.insert(6);

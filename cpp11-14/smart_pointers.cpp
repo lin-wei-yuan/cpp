@@ -24,7 +24,7 @@ void challenge1()
     std::cout << "ID of u2 is " << u2.get()->getID() << std::endl;
     std::cout << "ID of u2 is " << u2->getID() << std::endl;
 
-    Test* t1 = new Test(1);
+    Test *t1 = new Test(1);
     std::unique_ptr<Test> u3{ t1 };
     // We dont have memory leak,
     // Now ``u3``s deleter is will be called
@@ -35,7 +35,7 @@ void challenge1()
 // std::shared_ptr
 void challenge2()
 {
-    Test* t1 = new Test(1);
+    Test *t1 = new Test(1);
     std::shared_ptr<Test> s1{ t1 };
     std::cout << "Use count in s1: " << s1.use_count() << std::endl;
     std::shared_ptr<Test> s2{ s1 };
@@ -44,10 +44,8 @@ void challenge2()
     // s2 has 0 references
     std::shared_ptr<Test> s3{ std::move(s2) };
     std::cout << "Use count in s3: " << s3.use_count() << std::endl;
-    if(!s2)
-    {
+    if (!s2)
         std::cout << "s2 has 0 references" << std::endl;
-    }
 }
 
 // std::weak_ptr

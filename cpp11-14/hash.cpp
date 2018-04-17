@@ -6,9 +6,9 @@
 using namespace std;
 
 template<typename S, typename F>
-void hash_combine(S& seed, const F& field)
+void hash_combine(S &seed, const F &field)
 {
-    seed ^= (std::hash<F>{}(field) << 1);
+    seed ^= (std::hash<F> {}(field) << 1);
 }
 
 struct SData
@@ -21,7 +21,7 @@ public:
     std::string field5;
 };
 
-bool operator==(const SData& o1, const SData& o2)
+bool operator==(const SData &o1, const SData &o2)
 {
     return o1.field1 == o2.field1 &&
            o1.field2 == o2.field2 &&
@@ -39,7 +39,7 @@ struct hash<SData>
     typedef SData arg_t;
     typedef std::size_t res_t;
 
-    res_t operator()(const arg_t& s) const
+    res_t operator()(const arg_t &s) const
     {
         res_t seed;
         hash_combine(seed, s.field1);
@@ -60,10 +60,10 @@ int main(int argc, char const *argv[])
 
     std::unordered_set<SData> dataset = { s1, s2, s3 };
     auto hasher = dataset.hash_function();
-    for(const auto& data: dataset)
-    {
+
+    for (const auto &data : dataset)
         std::cout << "Hash: " << hasher(data) << std::endl;
-    }
+
     std::cout << std::boolalpha << "Is in set: " << (dataset.find(s1) != dataset.end()) << std::endl;
 
     return 0;

@@ -14,13 +14,13 @@ public:
         std::cout << "Default A::ctor" << std::endl;
     }
 
-    A(const A& _obj)
+    A(const A &_obj)
     {
         throw std::logic_error("From copy A::ctor");
     }
 
-    A(T&& _obj)
-    : obj(std::move(_obj))
+    A(T &&_obj)
+        : obj(std::move(_obj))
     {
         throw std::logic_error("From move A::ctor");
     }
@@ -36,8 +36,8 @@ class B
 {
     T obj;
 public:
-    B(T&& _obj)
-    : obj(std::move(_obj))
+    B(T &&_obj)
+        : obj(std::move(_obj))
     {
         std::cout << "B::ctor called" << std::endl;
     }
@@ -54,12 +54,14 @@ class C
 {
     T obj;
 public:
+
     C() try
-    : obj(std::move(T()))
+:
+        obj(std::move(T()))
     {
         std::cout << "C::ctor called " << std::endl;
     }
-    catch(const std::logic_error& le)
+    catch (const std::logic_error &le)
     {
         std::cout << "C::C() cathed: " << le.what() << std::endl;
     }

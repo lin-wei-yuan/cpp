@@ -27,19 +27,20 @@
 #define __NULLPTR NULL
 #endif
 
-namespace custom {
+namespace custom
+{
 
 template<typename value_type>
 class vector
 {
 public:
-    typedef value_type* iterator;
-    typedef const value_type* const_iterator;
-    typedef value_type& reference;
-    typedef const value_type& const_reference;
+    typedef value_type *iterator;
+    typedef const value_type *const_iterator;
+    typedef value_type &reference;
+    typedef const value_type &const_reference;
 
 private:
-    value_type* m_arr;
+    value_type *m_arr;
     size_t m_size;
     size_t m_capacity;
     iterator m_begin;
@@ -63,12 +64,12 @@ private:
     void _range_allocate(size_t _n)
     {
         size_t allocated = _n * sizeof(value_type);
-        m_arr = static_cast<value_type*>(operator new[] (allocated));
+        m_arr = static_cast<value_type *>(operator new[] (allocated));
     }
     /*!
      * @brief  Init element
      */
-    void _node_initialize(const value_type& elem)
+    void _node_initialize(const value_type &elem)
     {
         new (m_arr + m_size++) value_type(elem);
         m_capacity++;
@@ -79,9 +80,7 @@ private:
     void _destruct()
     {
         for (size_t i = 0; i < m_size; ++i)
-        {
             m_arr[i].~value_type();
-        }
 
         operator delete[] (m_arr);
         m_size = 0;
@@ -112,9 +111,7 @@ public:
         _range_allocate(size);
 
         for (size_t i = 0; i < size; ++i)
-        {
             _node_initialize(value_type());
-        }
 
         _iterators();
     }
@@ -123,7 +120,7 @@ public:
      * @param size  The number of elements to initially create.
      * @param element  An element to copy.
      */
-    vector(size_t size, const value_type& element)
+    vector(size_t size, const value_type &element)
         : m_size(0)
         , m_capacity(0)
         , m_begin(__NULLPTR)
@@ -132,9 +129,7 @@ public:
         _range_allocate(size);
 
         for (size_t i = 0; i < size; ++i)
-        {
             _node_initialize(element);
-        }
 
         _iterators();
     }
@@ -143,7 +138,7 @@ public:
      * @brief  Vector copy constructor.
      * @param other  A vector of identical elemen
      */
-    vector(const vector<value_type>& other)
+    vector(const vector<value_type> &other)
         : m_size(0)
         , m_capacity(0)
         , m_begin(__NULLPTR)
@@ -152,9 +147,7 @@ public:
         _range_allocate(other.size());
 
         for (size_t i = 0; i < other.size(); ++i)
-        {
             _node_initialize(other.at(i));
-        }
 
         _iterators();
     }
@@ -174,9 +167,7 @@ public:
         _range_allocate(dist);
 
         for (const_iterator it = _begin; it != _end; ++it)
-        {
             _node_initialize(*it);
-        }
 
         _iterators();
     }
@@ -280,9 +271,7 @@ public:
     reference at(size_t index)
     {
         if (index >= m_size)
-        {
             throw std::out_of_range("vector::_M_range_check");
-        }
 
         return m_arr[index];
     }
@@ -296,9 +285,7 @@ public:
     const_reference at(size_t index) const
     {
         if (index >= m_size)
-        {
             throw std::out_of_range("vector::_M_range_check");
-        }
 
         return m_arr[index];
     }
@@ -312,25 +299,21 @@ public:
      *  done in constant time if the %vector has preallocated space
      *  available.
      */
-    void push_back(const value_type& element)
+    void push_back(const value_type &element)
     {
         // space full
         if (m_size == m_capacity)
-        {
             (m_capacity == 0) ? reserve(1) : reserve(2 * m_capacity);
-        }
 
         m_arr[m_size++] = element;
     }
 
 #if __cplusplus >= 201103L
-    void push_back(value_type&& element)
+    void push_back(value_type &&element)
     {
         // space full
         if (m_size == m_capacity)
-        {
             (m_capacity == 0) ? reserve(1) : reserve(2 * m_capacity);
-        }
 
         m_arr[m_size++] = std::move(element);
     }
@@ -352,22 +335,18 @@ public:
 
         if (capacity >= max_size()) throw std::length_error("vector::reserve size > max_size");
 
-        value_type* _arr = new value_type[capacity];
+        value_type *_arr = new value_type[capacity];
         size_t size = m_size;
 
         for (size_t i = 0; i < size; ++i)
-        {
             _arr[i] = m_arr[i];
-        }
 
         // Remove all after copying
         _destruct();
         _range_allocate(capacity);
 
         for (size_t i = 0; i < size; ++i)
-        {
             _node_initialize(_arr[i]);
-        }
     }
     /*!
      * @brief  Returns the size of largest size of %vector

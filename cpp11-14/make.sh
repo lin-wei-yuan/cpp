@@ -14,7 +14,7 @@ CC=c++14
 
 filename="${1##*/}"
 
-g++ -std=$CC -Wall -pedantic -pthread $1 -Ibase/ -o build/$filename.executable
+g++ -std=$CC -Wall -pedantic -pthread $1 -Ibase/ -o build/$filename.executable -lbenchmark -lgtest
 
 
 if [ -e build/$filename.executable ]; then

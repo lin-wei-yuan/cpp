@@ -11,8 +11,8 @@ int value = 73;
 // Example of methods
 void f1() {}
 int f2() { return 0; }
-int& f3() { return value; }
-int&& f4() { return std::move(value); }
+int &f3() { return value; }
+int &&f4() { return std::move(value); }
 
 template<typename T>
 void print()
@@ -53,10 +53,10 @@ void challenge1()
     print<decltype(f4())>(); // int -> (i)
     // Pointers
     int aa = 2;
-    int* p = &aa;
-    int* np = p;
-    int** npp = &np;
-    int*** nppp = &npp;
+    int *p = &aa;
+    int *np = p;
+    int **npp = &np;
+    int *** nppp = &npp;
     print<decltype(p)>(); // int* -> (Pi)
     print<decltype(np)>(); // int* -> (Pi)
     print<decltype(npp)>(); // int** -> (PPi)
@@ -72,28 +72,28 @@ void challenge1()
 **/
 
 template<typename T>
-void f5(T& param)
+void f5(T &param)
 {
     cout << "T type is " << type_name<T>() << endl;
     cout << "ParamType is " << type_name<decltype(param)>() << endl;
 }
 
 template<typename T>
-void f6(const T& param)
+void f6(const T &param)
 {
     cout << "T type is " << type_name<T>() << endl;
     cout << "ParamType is " << type_name<decltype(param)>() << endl;
 }
 
 template<typename T>
-void f7(T* param)
+void f7(T *param)
 {
     cout << "T type is " << type_name<T>() << endl;
     cout << "ParamType is " << type_name<decltype(param)>() << endl;
 }
 
 template<typename T>
-void f8(T&& param)
+void f8(T &&param)
 {
     cout << "T type is " << type_name<T>() << endl;
     cout << "ParamType is " << type_name<decltype(param)>() << endl;
@@ -117,10 +117,10 @@ void challenge2()
 {
     int x = 27; // Same as Meyers lol
     const int cx = x;
-    const int& rx = x;
-    int* px = &x;
-    const int* cpx = &x;
-    const int* const cpcx = &x;
+    const int &rx = x;
+    int *px = &x;
+    const int *cpx = &x;
+    const int *const cpcx = &x;
     const char ax[] = "Test";
     // 1) ParamType is a pointer or a reference but not
     //    universal(better to say forwarding) reference

@@ -6,10 +6,11 @@
 #include <forward_list>
 #include <stdexcept>
 
-namespace {
+namespace
+{
 
 template<typename T>
-void print(const T& container)
+void print(const T &container)
 {
     if (container.empty())
     {
@@ -18,9 +19,7 @@ void print(const T& container)
     }
 
     for (typename T::const_iterator it = container.begin(); it != container.end(); ++it)
-    {
         std::cout << *(it) << " ";
-    }
 
     std::cout << std::endl;
 }

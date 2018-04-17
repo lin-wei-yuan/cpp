@@ -5,7 +5,7 @@ using namespace std;
 typedef unsigned long long int ull32_t;
 
 template<typename T>
-void print(const std::complex<T>& c)
+void print(const std::complex<T> &c)
 {
     cout << "[" << c.real() << ", " << c.imag() << "i]" << endl;
 }
@@ -22,12 +22,12 @@ constexpr std::complex<ull32_t> operator "" _i(ull32_t x)
 }
 
 // Work with dynamical memory
-/*constexpr*/ std::string operator "" _ex(const char* str)
+/*constexpr*/ std::string operator "" _ex(const char *str)
 {
     return std::move(std::string(str));
 }
 
-/*constexpr*/ std::string operator "" _s(const char* str, size_t n)
+/*constexpr*/ std::string operator "" _s(const char *str, size_t n)
 {
     return std::move(std::string(str, n));
 }

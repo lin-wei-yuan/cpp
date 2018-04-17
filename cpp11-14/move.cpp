@@ -13,7 +13,7 @@ public:
 // Swap implementation that make a lot of copies
 // variable temp + 2 copies(A::operator=())
 template<class T>
-void swap_copy(T& first, T& second) // <- without const
+void swap_copy(T &first, T &second) // <- without const
 {
     // Copy ctor called
     T temp(first); // temp contains copy of object with id 1
@@ -26,7 +26,7 @@ void swap_copy(T& first, T& second) // <- without const
 // Swap implementation that use move semantic
 // 1 object creation
 template<class T>
-void swap_move(T& first, T& second)
+void swap_move(T &first, T &second)
 {
     // Create variable for storing 'first' variable
     // 'first' now in unspecified BUT valid state (17.6.5.15 [lib.types.movedfrom])
@@ -57,7 +57,7 @@ public:
         cout << "D::ctor" << endl;
     }
 
-    D(A& p1)
+    D(A &p1)
     {
         cout << "D(A&)::ctor" << endl;
     }
@@ -67,7 +67,7 @@ public:
         cout << "D(int, double)::ctor" << endl;
     }
 
-    D(int p1, double p2, const std::string& p3)
+    D(int p1, double p2, const std::string &p3)
     {
         cout << "D( int, double, string)::ctor" << endl;
     }
@@ -90,7 +90,7 @@ public:
 
 template<class T, class P1>
 std::shared_ptr<T>
-make_shared(P1&& p)
+make_shared(P1 &&p)
 {
     return std::shared_ptr<T>(new T(std::forward<P1>(p)));
 }

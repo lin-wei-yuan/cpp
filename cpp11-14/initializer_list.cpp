@@ -5,33 +5,27 @@
 using namespace std;
 using utils::type_name;
 
-void f1(const std::initializer_list<int>& list)
+void f1(const std::initializer_list<int> &list)
 {
     cout << "initializer_list size is " << list.size() << endl;
-    for(const auto& element: list)
-    {
+    for (const auto &element : list)
         cout << element << " ";
-    }
     cout << endl;
 }
 
-ostream& operator<<(ostream& s, const vector<int> list)
+ostream &operator<<(ostream &s, const vector<int> list)
 {
-    for(const auto& element: list)
-    {
+    for (const auto &element : list)
         s << element << " ";
-    }
     s << endl;
     return s;
 }
 
-void f2(const std::initializer_list<vector<int>>& list)
+void f2(const std::initializer_list<vector<int>> &list)
 {
     cout << "initializer_list size is " << list.size() << endl;
-    for(const auto& element: list)
-    {
+    for (const auto &element : list)
         cout << element;
-    }
 }
 
 void challenge1()

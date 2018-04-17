@@ -86,7 +86,7 @@ void challenge2()
         std::cout << it << std::endl;
     }
 
-    catch (const std::exception& e)
+    catch (const std::exception &e)
     {
         std::cout << e.what() << std::endl;
     }
