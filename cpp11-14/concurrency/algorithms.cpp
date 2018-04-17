@@ -6,95 +6,200 @@
 #include <numeric>
 #include <map>
 #include <ctime>
+#include <cmath>
 #include <string>
+#include <mutex>
+#include <queue>
 
 #include <defines.h>
 
-using utils::CaptureTime;
+#define UNIT_TESTING
+#ifdef UNIT_TESTING
+#include "gtest/gtest.h"
+#endif
 
-typedef std::chrono::time_point<std::chrono::system_clock> t_point;
-typedef unsigned long long ull;
+// #define BENCHMARKING
+#ifdef BENCHMARKING
+#include "benchmark/benchmark.h"
+#endif
 
-class scoped_guard
+namespace algorithms
 {
-public:
-    scoped_guard() { std::cout << "Thread #" << std::this_thread::get_id() << " started." << std::endl; }
-    ~scoped_guard() { std::cout << "Thread #" << std::this_thread::get_id() << " finished." << std::endl; }
-};
+
+typedef unsigned long long                          ull;
+
+// This method checks if candidate is prime number
+bool IsPrime(ull candidate)
+{
+    if (candidate <= 2) return false;
+
+    // @TODO: you can remove optiomization for longer tests
+    // 3sec vs 27 ms in [0..100000] range
+    // for(ull i = 2; i < candidate; ++i)
+    for (ull i = 2; i < std::sqrt(candidate); ++i)
+    {
+        if (candidate % i == 0)
+            return false;
+    }
+
+    return true;
+}
+
+} // end of algorithm namespace
 
 namespace parallel
 {
-    constexpr ull operations_per_thread = 25;
 
-    ull get_num_of_threads(ull operations)
+constexpr ull MAX_THREADS_COUNT = 8;
+constexpr ull HW_THREAD_MULTIPLIER = 2;
+
+typedef std::function<void(void *)>      TaskFunctor;
+typedef std::pair<TaskFunctor, void *>   TaskPair;
+
+class TaskPool
+{
+public:
+    TaskPool()
+        : m_thread(&TaskPool::MainLoop, this)
+    {}
+
+    ~TaskPool()
     {
-        const ull max_threads = operations / operations_per_thread;
-        const ull hw_threads = std::thread::hardware_concurrency();
-        return std::min(hw_threads != 0 ? hw_threads : 2, max_threads);
+        if (m_thread.joinable())
+            m_thread.join();
     }
 
-    template< typename It, typename T>
-    struct acc
+    void AddTask(const TaskFunctor &task, void *ctx)
     {
-        void operator()(It first, It last, T& initial)
-        {
-            scoped_guard sg;
-            initial = std::accumulate(first, last, initial);
-        }
-    };
-
-    template< typename It, typename T>
-    T accumulate(It first, It last, T initial)
-    {
-        const ull length = std::distance(first, last);
-        if(length == 0)
-        {
-            return initial;
-        }
-        const ull threads_count = get_num_of_threads(length);
-        const ull block_size = length / threads_count;
-        // Create thread pool
-        std::vector<std::thread> pool(threads_count - 1);
-        std::vector<T> results(threads_count, 0);
-        It block_start = first;
-        for(ull i = 0; i < threads_count - 1; ++i)
-        {
-            It block_end = block_start;
-            std::advance(block_end, block_size);
-            pool.at(i) = std::thread(acc<It, T>(), block_start, block_end, std::ref(results.at(i)));
-            block_start = block_end;
-        }
-        std::for_each(pool.begin(), pool.end(), std::mem_fn(&std::thread::join));
-        acc<It, T>()(block_start, last, std::ref(results.at(threads_count -1)));
-        acc<decltype(results.begin()), T>()(results.begin(), results.end(), std::ref(initial));
-        return initial;
+        std::lock_guard<std::mutex> _lock_guard(m_pool_mutex);
+        m_task_queue.push(std::make_pair(task, ctx));
     }
+
+    void CancelTasks()
+    {
+        std::lock_guard<std::mutex> _lock_guard(m_pool_mutex);
+
+        while (m_task_queue.size() > 1)
+            m_task_queue.pop();
+    }
+
+    TaskPool(const TaskPool &) = delete;
+    TaskPool &operator=(const TaskPool &that) = delete;
+
+private:
+    std::queue<TaskPair> m_task_queue;
+    std::thread m_thread;
+    std::mutex m_pool_mutex;
+
+    ull GetThreadsCount() const
+    {
+        const ull _hw_threads = std::thread::hardware_concurrency();
+        return std::min(_hw_threads != 0 ? _hw_threads * HW_THREAD_MULTIPLIER
+                        : HW_THREAD_MULTIPLIER, MAX_THREADS_COUNT);
+    }
+
+    void MainLoop()
+    {
+        while (true)
+        {
+            TaskPair _t;
+            {
+                std::lock_guard<std::mutex> lg(m_pool_mutex);
+
+                if (m_task_queue.empty())
+                    continue;
+
+                _t = m_task_queue.front();
+                m_task_queue.pop();
+            }
+            // Spawn thread
+            std::thread worker([_t] ()
+            {
+                _t.first(_t.second);
+            });
+            worker.detach();
+        }
+    }
+};
 } // end of parallel namespace
 
-/*
-    Results on 8 cores( 8 hardware threads)
-    [accumulate] Non-parallel version time is 609ms. Result is 1000000000
-    [accumulate] Parallel version time is 242ms. Result is 1000000000
-    On 1 thread
-    [accumulate] Non-parallel version time is 601ms. Result is 1000000000
-    [accumulate] Parallel version time is 650ms. Result is 1000000000
-*/
-int main(int argc, char const *argv[])
+//-------------------------------------------------------------------------------------//
+
+#ifdef UNIT_TESTING
+
+TEST(IsPrimeTesting, HandleRangeOfInput)
 {
-    CaptureTime<std::chrono::milliseconds> ct;
-    std::vector<ull> v(100000000, 10);
-    // std version, non parallel
-    ct.Start();
-    auto sum_non_parallel = std::accumulate(v.begin(), v.end(), 0);
-    auto time_non_parallel = ct.Stop();
-    std::cout << "[accumulate] Non-parallel version time is " << time_non_parallel
-              << "ms. Result is " << sum_non_parallel << std::endl;
-    // parallel version
-    ct.Start();
-    auto sum_parallel = parallel::accumulate(v.begin(), v.end(), 0);
-    auto time_parallel = ct.Stop();
-    std::cout << "[accumulate] Parallel version time is " << time_parallel
-              << "ms. Result is " << sum_parallel << std::endl;
+    EXPECT_EQ(algorithms::IsPrime(-1), false);
+    EXPECT_EQ(algorithms::IsPrime(1), false);
+    EXPECT_EQ(algorithms::IsPrime(2), false);
+    EXPECT_EQ(algorithms::IsPrime(3), true);
+    EXPECT_EQ(algorithms::IsPrime(5), true);
+    EXPECT_EQ(algorithms::IsPrime(7), true);
+}
+
+class TestContext
+{
+public:
+    TestContext()
+        : m_test_data(1000000)
+    {}
+
+    static void TestTask(void *ctx)
+    {
+        TestContext *pointer = static_cast<TestContext *>(ctx);
+
+        for (int i = 0; i < pointer->GetDataFromPulbic(); ++i)
+            algorithms::IsPrime(i);
+
+        std::cout << "End of " << std::this_thread::get_id() << " thread" << std::endl;
+    }
+
+    void MakeSomeNoise()
+    {
+        m_pool.AddTask(&TestTask, this);
+    }
+
+    int GetDataFromPulbic() const
+    {
+        return m_test_data;
+    }
+private:
+    parallel::TaskPool m_pool;
+    int m_test_data;
+};
+
+int main(int argc, char *argv[])
+{
+    ::testing::InitGoogleTest(&argc, argv);
+    RUN_ALL_TESTS();
+    TestContext tc;
+
+    for (int i = 0; i < 100; ++i)
+        tc.MakeSomeNoise();
 
     return 0;
 }
+
+#elif defined BENCHMARKING
+
+void IsPrime_Test(ull start, ull iterations)
+{
+    for (ull i = start; i < iterations; ++i)
+        algorithms::IsPrime(i);
+}
+
+void Benchmark_IsPrime_1kkRange(benchmark::State &state)
+{
+    ull start_position = state.range(0);
+    ull limit = state.range(1);
+
+    while (state.KeepRunning())
+        IsPrime_Test(start_position, limit);
+}
+
+BENCHMARK(Benchmark_IsPrime_1kkRange)->Unit(benchmark::kMillisecond)->Args({0, 100000});
+
+BENCHMARK_MAIN()
+
+#endif
+
