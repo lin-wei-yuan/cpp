@@ -27,7 +27,7 @@ void challenge1()
     Test *t1 = new Test(1);
     std::unique_ptr<Test> u3{ t1 };
     // We dont have memory leak,
-    // Now ``u3``s deleter is will be called
+    // Now ``u3``s deleter will be called
     u3.reset();
     std::cout << " End of challenge1. Now all dtors will be called" << std::endl;
 }
